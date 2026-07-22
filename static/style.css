@@ -1,0 +1,246 @@
+/* ==========================
+   General Styles
+========================== */
+
+body{
+    background-color: black;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    color: lightseagreen;
+    font-size: 50px;
+    padding: 20px;
+    margin: 30px;
+    text-transform: uppercase;
+    border: 2px solid darkorchid;
+}
+
+h2{
+    color: rgb(212, 71, 132);
+    font-size: 35px;
+}
+
+h3{
+    color: gold;
+    font-size: 30px;
+}
+
+p{
+    color: white;
+    font-size: 22px;
+}
+
+/* ==========================
+   Buttons
+========================== */
+
+.green-btn,
+.blue-btn,
+.purple-btn,
+.orange-btn{
+    color: white;
+    font-size: 18px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.green-btn{
+    background-color: green;
+}
+
+.blue-btn{
+    background-color: blue;
+}
+
+.purple-btn{
+    background-color: purple;
+}
+
+.orange-btn{
+    background-color: orange;
+}
+
+.purple-btn:hover{
+    background-color: darkmagenta;
+}
+
+.orange-btn:hover{
+    background-color: darkorange;
+}
+
+/* ==========================
+   Text Box (Dream Job)
+========================== */
+
+input[type="text"]{
+    width: 300px;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid purple;
+    border-radius: 8px;
+}
+
+/* ==========================
+   Skills Page
+========================== */
+
+.skill-item{
+    display: flex;
+    align-items: center;
+    width: 220px;
+    margin: 15px auto;
+}
+
+.skill-item input[type="checkbox"]{
+    width: auto;
+    padding: 0;
+    margin-right: 12px;
+    border: none;
+    transform: scale(1.2);
+}
+
+.skill-item label{
+    color: white;
+    font-size: 20px;
+    margin: 0;
+}
+  
+
+.progress-container{
+    width:80%;
+    height:35px;
+    background:#d9d9d9;
+    border-radius:30px;
+    margin:20px auto;
+    overflow:hidden;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.progress-bar{
+    height:100%;
+    background:linear-gradient(90deg,#00c853,#64dd17);
+    color:white;
+    font-weight:bold;
+    text-align:center;
+    line-height:35px;
+    transition:width 1.5s ease;
+}
+
+.summary-container{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin:30px;
+}
+
+.card{
+    width:220px;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    background:#1f1f1f;
+    color:white;
+    transition:0.3s;
+    box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card h1{
+    font-size:45px;
+    margin-top:15px;
+    color:#00E676;
+}
+
+.card h3{
+    color:#444;
+}
+
+.selected-card{
+    border-top:8px solid #2196F3;
+}
+
+.found-card{
+    border-top:8px solid #00C853;
+}
+
+.missing-card{
+    border-top:8px solid #F44336;
+}
+
+.score-card{
+    border-top:8px solid #9C27B0;
+}
+
+
+.status-box{
+    width:250px;
+    margin:25px auto;
+    padding:15px;
+    background:white;
+    color:#333;
+    font-size:24px;
+    font-weight:bold;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 6px 15px rgba(0,0,0,0.3);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.header h1{
+    font-size:45px;
+    color:white;
+    margin-bottom:10px;
+}
+
+.header p{
+    color:#cccccc;
+    font-size:20px;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:#121212;
+
+    color:white;
+
+}
+
+.chart-container{
+    width:70%;
+    margin:40px auto;
+    background:white;
+    border-radius:15px;
+    padding:20px;
+}
+
+.roadmap-box{
+    width:80%;
+    margin:40px auto;
+}
+
+.roadmap-step{
+    background:#1f1f1f;
+    color:white;
+    margin:15px 0;
+    padding:18px;
+    border-left:6px solid #00E676;
+    border-radius:10px;
+    font-size:20px;
+    box-shadow:0 5px 12px rgba(0,0,0,0.3);
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Report</title>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="header">
+
+    <h1>📊 JMS ANALYZER</h1>
+
+    <p>Job Market Skill Analysis Dashboard</p>
+
+</div>
+
+    <h2>Analysis Report</h2>
+
+    <hr>
+    <div class="summary-container">
+
+    <div class="card">
+        <h3>Skills Selected</h3>
+        <h1>{{ selected_count }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Skills Found</h3>
+        <h1>{{ found_count }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Skills Missing</h3>
+        <h1>{{ missing_count }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Match Score</h3>
+        <h1>{{ percentage }}%</h1>
+    </div>
+
+</div>
+
+    <h3>Your Selected Skills</h3>
+
+    {% for skill in skills %}
+        <p>✔ {{ skill }}</p>
+    {% endfor %}
+
+    <hr>
+
+    <h2>Skills You Have</h2>
+
+    {% for skill in found_skills %}
+        <p>✅ {{ skill }}</p>
+    {% endfor %}
+
+    <hr>
+
+    <h2>Skills to Learn</h2>
+
+    {% for skill in missing_skills %}
+        <p>❌ {{ skill }}</p>
+    {% endfor %}
+
+    <hr>
+    
+    <h2>🎯 Skill Match</h2>
+
+    <div class="progress-container">
+        <div class="progress-bar" style="width: {{ percentage }}%;">
+           {{ percentage }}%
+        </div>
+    </div>
+    
+    <hr>
+    <div class="recommendation-box">
+    <h2>💡 Recommendation</h2>
+    <p>{{ recommendation }}</p>
+</div>
+<h2>Current Level</h2>
+
+<div class="status-box">
+
+    {{ status }}
+
+</div>
+
+<h2>Skill Distribution</h2>
+
+<div class="chart-container">
+    {{ graph|safe }}
+</div>
+
+<hr>
+
+<h2>📚 Personalized Learning Roadmap</h2>
+
+<div class="roadmap-box">
+
+{% for step in roadmap %}
+
+<div class="roadmap-step">
+    {{ step }}
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

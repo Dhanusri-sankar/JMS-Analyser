@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skills</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>JMS ANALYZER</h1>
+
+    <hr>
+
+    <h2>Select Your Current Skills</h2>
+
+    <p>Select all the skills you already know.</p>
+ <form action="/analysis" method="POST">
+
+    <div class="skill-item">
+        <input type="checkbox" name="skills" value="Python">
+        <label for="python">Python</label>
+    </div>
+
+    <div class="skill-item">
+        <input type="checkbox" name="skills" value="SQL">
+        <label for="sql">SQL</label>
+    </div>
+
+    <div class="skill-item">
+        <input type="checkbox" name="skills" value="Excel">
+        <label for="excel">Excel</label>
+    </div>
+
+    <div class="skill-item">
+        <input type="checkbox" name="skills" value="Power BI">
+        <label for="powerbi">Power BI</label>
+    </div>
+
+    <div class="skill-item">
+        <input type="checkbox" name="skills" value="Pandas">
+        <label for="pandas">Pandas</label>
+    </div>
+
+    <div class="skill-item">
+        <input type="checkbox" name="skills" value="NumPy">
+        <label for="numpy">NumPy</label>
+    </div>
+
+    <div class="skill-item">
+        <input type="checkbox" name="skills" value="Statistics">
+        <label for="statistics">Statistics</label>
+    </div>
+
+    <div class="skill-item">
+        <input type="checkbox" name="skills" value="Git">
+        <label for="git">Git</label>
+    </div>
+
+    <br>
+
+    <button class="orange-btn">Analyze Skills</button>
+
+</form>
+</body>
+</html>
