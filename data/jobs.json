@@ -1,0 +1,133 @@
+{
+  "Data Analyst": {
+    "skills": [
+      "Python",
+      "SQL",
+      "Excel",
+      "Pandas",
+      "NumPy"
+    ]
+  },
+
+  "Data Engineer": {
+    "skills": [
+      "Python",
+      "SQL",
+      "Apache Spark",
+      "Hadoop",
+      "Airflow"
+    ]
+  },
+
+  "Python Developer": {
+    "skills": [
+      "Python",
+      "Flask",
+      "Git",
+      "OOP",
+      "SQL"
+    ]
+  },
+
+  "AI Engineer": {
+    "skills": [
+      "Python",
+      "Machine Learning",
+      "Deep Learning",
+      "TensorFlow",
+      "NumPy"
+    ]
+  },
+
+  "Java Developer": {
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "SQL",
+      "Git",
+      "OOP",
+      "REST API",
+      "Maven",
+      "JUnit"
+    ]
+  },
+
+  "C++ Developer": {
+    "skills": [
+      "C++",
+      "OOP",
+      "STL",
+      "Data Structures",
+      "Algorithms",
+      "Git",
+      "Debugging",
+      "Linux"
+    ]
+  },
+
+  "Frontend Developer": {
+    "skills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Bootstrap",
+      "React",
+      "Git",
+      "Responsive Design",
+      "REST API"
+    ]
+  },
+
+  "Backend Developer": {
+    "skills": [
+      "Python",
+      "Flask",
+      "Django",
+      "SQL",
+      "REST API",
+      "Git",
+      "Authentication",
+      "Database Design"
+    ]
+  },
+
+  "Full Stack Developer": {
+    "skills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React",
+      "Node.js",
+      "Python",
+      "SQL",
+      "Git",
+      "REST API"
+    ]
+  },
+
+  "React Developer": {
+    "skills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React",
+      "Redux",
+      "REST API",
+      "Git",
+      "Responsive Design"
+    ]
+  },
+
+  "Node.js Developer": {
+    "skills": [
+      "JavaScript",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "REST API",
+      "Git",
+      "JWT",
+      "NPM"
+    ]
+  }
+}

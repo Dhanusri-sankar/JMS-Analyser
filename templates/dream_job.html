@@ -1,17 +1,79 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dream Job</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
+
     <h1>JMS ANALYZER</h1>
-    <h2>What is your Dream Job?</h2>
-    <input type="text" placeholder="Enter your dream job">
-<br><br>
-     <a href="/skills">
-    <button class="purple-btn">Next →</button>
-</a>
+
+    <h2>Select Your Dream Job</h2>
+
+    <form action="/skills" method="POST">
+
+        <select name="dream_job" required>
+
+            <option value="">-- Select Dream Job --</option>
+
+            <optgroup label="Programming">
+                <option value="Python Developer">Python Developer</option>
+                <option value="Java Developer">Java Developer</option>
+                <option value="C++ Developer">C++ Developer</option>
+                <option value="Frontend Developer">Frontend Developer</option>
+                <option value="Backend Developer">Backend Developer</option>
+                <option value="Full Stack Developer">Full Stack Developer</option>
+                <option value="React Developer">React Developer</option>
+                <option value="Node.js Developer">Node.js Developer</option>
+            </optgroup>
+
+            <optgroup label="Data">
+                <option value="Data Analyst">Data Analyst</option>
+                <option value="Data Engineer">Data Engineer</option>
+                <option value="Data Scientist">Data Scientist</option>
+                <option value="Business Intelligence (BI) Developer">Business Intelligence (BI) Developer</option>
+            </optgroup>
+
+            <optgroup label="Artificial Intelligence">
+                <option value="AI Engineer">AI Engineer</option>
+                <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                <option value="Deep Learning Engineer">Deep Learning Engineer</option>
+                <option value="NLP Engineer">NLP Engineer</option>
+            </optgroup>
+
+            <optgroup label="Cloud & DevOps">
+                <option value="Cloud Engineer">Cloud Engineer</option>
+                <option value="DevOps Engineer">DevOps Engineer</option>
+                <option value="Site Reliability Engineer (SRE)">Site Reliability Engineer (SRE)</option>
+            </optgroup>
+
+            <optgroup label="Cyber Security">
+                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                <option value="Ethical Hacker">Ethical Hacker</option>
+            </optgroup>
+
+            <optgroup label="Mobile Development">
+                <option value="Android Developer">Android Developer</option>
+                <option value="iOS Developer">iOS Developer</option>
+            </optgroup>
+
+            <optgroup label="Testing">
+                <option value="Software Test Engineer (QA)">Software Test Engineer (QA)</option>
+                <option value="Automation Test Engineer">Automation Test Engineer</option>
+            </optgroup>
+
+        </select>
+
+        <br><br>
+
+        <button class="purple-btn" type="submit">
+            Next →
+        </button>
+
+    </form>
 
 </body>
+
 </html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>📊 JMS Analyzer Dashboard</h1>
+
+<h2>Total Reports: {{ total_reports }}</h2>
+<h2>Average Score: {{ average_score }}%</h2>
+<h2>Highest Score: {{ highest_score }}%</h2>
+
+<h3>Recent Reports</h3>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th>
+        <th>Dream Job</th>
+        <th>Score</th>
+        <th>Status</th>
+    </tr>
+
+    {% for report in reports %}
+    <tr>
+        <td>{{ report[0] }}</td>
+        <td>{{ report[1] }}</td>
+        <td>{{ report[2] }}%</td>
+        <td>{{ report[3] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<a href="/">🏠 Home</a>
+
+</body>
+</html>

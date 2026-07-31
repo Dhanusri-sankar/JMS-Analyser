@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>JMS Analyzer - History</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📊 JMS ANALYZER</h1>
+
+    <h2>Analysis History</h2>
+
+    {% if reports %}
+
+    <table class="history-table">
+
+        <tr>
+
+            <th>ID</th>
+            <th>Dream Job</th>
+            <th>Score</th>
+            <th>Status</th>
+            <th>Found Skills</th>
+            <th>Missing Skills</th>
+
+        </tr>
+
+        {% for report in reports %}
+
+        <tr>
+
+            <td>{{ report[0] }}</td>
+
+            <td>{{ report[1] }}</td>
+
+            <td>{{ report[2] }}%</td>
+
+            <td>{{ report[3] }}</td>
+
+            <td>{{ report[4] }}</td>
+
+            <td>{{ report[5] }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <h3>No reports found.</h3>
+
+    {% endif %}
+
+    <br><br>
+
+    <a href="/">
+        <button class="blue-btn">
+            ⬅ Back to Home
+        </button>
+    </a>
+
+</div>
+
+</body>
+
+</html>

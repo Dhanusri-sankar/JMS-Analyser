@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Analysis Report</title>
+    <title>JMS Analyzer - Analysis Report</title>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
@@ -10,18 +11,22 @@
 
 <body>
 
-    <div class="header">
-
+<div class="header">
     <h1>📊 JMS ANALYZER</h1>
-
     <p>Job Market Skill Analysis Dashboard</p>
-
 </div>
 
-    <h2>Analysis Report</h2>
+<h2>Analysis Report</h2>
+<hr>
 
-    <hr>
-    <div class="summary-container">
+<!-- Dream Job -->
+<div class="dream-job-box">
+    <h2>🎯 Dream Job</h2>
+    <h3>{{ dream_job }}</h3>
+</div>
+
+<!-- Summary Cards -->
+<div class="summary-container">
 
     <div class="card">
         <h3>Skills Selected</h3>
@@ -39,58 +44,68 @@
     </div>
 
     <div class="card">
-        <h3>Match Score</h3>
+        <h3>Readiness Score</h3>
         <h1>{{ percentage }}%</h1>
     </div>
 
 </div>
 
-    <h3>Your Selected Skills</h3>
+<hr>
 
-    {% for skill in skills %}
-        <p>✔ {{ skill }}</p>
-    {% endfor %}
+<div class="status-box">
+    <h2>{{ status }}</h2>
+</div>
 
-    <hr>
+<hr>
 
-    <h2>Skills You Have</h2>
+<h2>✔ Your Selected Skills</h2>
 
-    {% for skill in found_skills %}
-        <p>✅ {{ skill }}</p>
-    {% endfor %}
+<div class="skills-box">
+{% for skill in skills %}
+    <span class="skill-tag">{{ skill }}</span>
+{% endfor %}
+</div>
 
-    <hr>
+<hr>
 
-    <h2>Skills to Learn</h2>
+<h2>✅ Skills You Have</h2>
 
-    {% for skill in missing_skills %}
-        <p>❌ {{ skill }}</p>
-    {% endfor %}
+<div class="skills-box">
+{% for skill in found_skills %}
+    <span class="found-tag">{{ skill }}</span>
+{% endfor %}
+</div>
 
-    <hr>
-    
-    <h2>🎯 Skill Match</h2>
+<hr>
 
-    <div class="progress-container">
-        <div class="progress-bar" style="width: {{ percentage }}%;">
-           {{ percentage }}%
-        </div>
+<h2>❌ Skills to Learn</h2>
+
+<div class="skills-box">
+{% for skill in missing_skills %}
+    <span class="missing-tag">{{ skill }}</span>
+{% endfor %}
+</div>
+
+<hr>
+
+<h2>🎯 Skill Match</h2>
+
+<div class="progress-container">
+    <div class="progress-bar" style="width: {{ percentage }}%;">
+        {{ percentage }}%
     </div>
-    
-    <hr>
-    <div class="recommendation-box">
+</div>
+
+<hr>
+
+<div class="recommendation-box">
     <h2>💡 Recommendation</h2>
     <p>{{ recommendation }}</p>
 </div>
-<h2>Current Level</h2>
 
-<div class="status-box">
+<hr>
 
-    {{ status }}
-
-</div>
-
-<h2>Skill Distribution</h2>
+<h2>📈 Skill Distribution</h2>
 
 <div class="chart-container">
     {{ graph|safe }}
@@ -109,6 +124,20 @@
 </div>
 
 {% endfor %}
+
+</div>
+
+<hr>
+
+<div class="action-buttons">
+
+    <a href="/" class="blue-btn">🏠 Home</a>
+
+    <a href="/history" class="green-btn">📜 View History</a>
+
+    <a href="/download-report" class="orange-btn">
+      📄 Download PDF
+    </a>
 
 </div>
 

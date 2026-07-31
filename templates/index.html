@@ -4,19 +4,49 @@
     <title>JMS Analyzer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-   
+
     <h1>JMS Analyzer</h1>
+
     <h2>Job Market Skills Analyser</h2>
+
+    <h3>Welcome, {{ username }} 👋</h3>
 
     <p>Analyze • Learn • Grow</p>
 
     <hr>
 
     <h2>Welcome!</h2>
-    <p>This project helps users analyze their skills and find missing skills for their dream job.</p>
+
+    <p>
+        This project helps users analyze their skills and
+        find missing skills for their dream job.
+    </p>
+
     <a href="/user-type">
-    <button class="green-btn">Analyze Skills</button></a>
+        <button class="green-btn">
+            Analyze Skills
+        </button>
+    </a>
+
+    <br><br>
+
+    <a href="/history">
+        <button class="blue-btn">
+            📊 View Analysis History
+        </button>
+    </a>
+
+    <a href="/dashboard" class="blue-btn">
+       Dashboard
+    </a>
+
+    
+
+    <br><br>
+
     <h3>Thank You!</h3>
+
 </body>
 </html>
