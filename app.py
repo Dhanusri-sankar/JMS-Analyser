@@ -1,6 +1,6 @@
 import os
 import plotly.express as px
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask import send_file
 from pdf_generator import generate_pdf
 from resume_parser import extract_skills
@@ -9,7 +9,9 @@ from roadmap import ROADMAP
 from models import (
     create_tables,
     save_report,
-    get_reports
+    get_reports,
+    search_reports,
+    delete_report
 )
 
 app = Flask(__name__)
@@ -67,13 +69,25 @@ def skills():
 @app.route("/history")
 def history():
 
-    reports = get_reports()
+    keyword = request.args.get("search")
+
+    if keyword:
+        reports = search_reports(keyword)
+    else:
+        reports = get_reports()
 
     return render_template(
         "history.html",
-        reports=reports
+        reports=reports,
+        keyword=keyword
     )
 
+@app.route("/delete-report/<int:report_id>", methods=["POST"])
+def delete_report_route(report_id):
+
+    delete_report(report_id)
+
+    return redirect(url_for("history"))
 
 # ---------------- ANALYSIS ---------------- #
 

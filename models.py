@@ -87,3 +87,40 @@ def get_reports():
     conn.close()
 
     return reports
+
+def search_reports(keyword):
+
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT
+        id,
+        dream_job,
+        score,
+        status,
+        found_skills,
+        missing_skills
+    FROM reports
+    WHERE dream_job LIKE ?
+    ORDER BY id DESC
+    """, ('%' + keyword + '%',))
+
+    reports = cursor.fetchall()
+
+    conn.close()
+
+    return reports
+
+def delete_report(report_id):
+
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM reports WHERE id = ?",
+        (report_id,)
+    )
+
+    conn.commit()
+    conn.close()

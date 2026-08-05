@@ -129,5 +129,187 @@
       "JWT",
       "NPM"
     ]
+  },
+
+  "Data Scientist": {
+    "skills": [
+      "Python",
+      "SQL",
+      "Pandas",
+      "NumPy",
+      "Statistics",
+      "Machine Learning",
+      "Data Visualization",
+      "Scikit-learn"
+    ]
+  },
+
+  "Business Intelligence (BI) Developer": {
+    "skills": [
+      "SQL",
+      "Power BI",
+      "Excel",
+      "Data Warehousing",
+      "ETL",
+      "Data Modeling",
+      "DAX",
+      "Tableau"
+    ]
+  },
+
+  "Machine Learning Engineer": {
+    "skills": [
+      "Python",
+      "Machine Learning",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
+      "TensorFlow",
+      "SQL",
+      "Git"
+    ]
+  },
+
+  "Deep Learning Engineer": {
+    "skills": [
+      "Python",
+      "Deep Learning",
+      "TensorFlow",
+      "PyTorch",
+      "Neural Networks",
+      "NumPy",
+      "Computer Vision",
+      "Git"
+    ]
+  },
+
+  "NLP Engineer": {
+    "skills": [
+      "Python",
+      "Natural Language Processing",
+      "Machine Learning",
+      "Deep Learning",
+      "Transformers",
+      "TensorFlow",
+      "PyTorch",
+      "NLTK"
+    ]
+  },
+
+  "Cloud Engineer": {
+    "skills": [
+      "AWS",
+      "Azure",
+      "Linux",
+      "Docker",
+      "Networking",
+      "Cloud Computing",
+      "Git",
+      "Terraform"
+    ]
+  },
+
+  "DevOps Engineer": {
+    "skills": [
+      "Linux",
+      "Git",
+      "Docker",
+      "Kubernetes",
+      "Jenkins",
+      "CI/CD",
+      "AWS",
+      "Terraform"
+    ]
+  },
+
+  "Site Reliability Engineer (SRE)": {
+    "skills": [
+      "Linux",
+      "Python",
+      "Docker",
+      "Kubernetes",
+      "Cloud Computing",
+      "Monitoring",
+      "CI/CD",
+      "Networking"
+    ]
+  },
+
+  "Cybersecurity Analyst": {
+    "skills": [
+      "Network Security",
+      "Linux",
+      "Cybersecurity",
+      "SIEM",
+      "Vulnerability Assessment",
+      "Incident Response",
+      "Firewalls",
+      "Python"
+    ]
+  },
+
+  "Ethical Hacker": {
+    "skills": [
+      "Linux",
+      "Networking",
+      "Penetration Testing",
+      "Kali Linux",
+      "Web Security",
+      "Vulnerability Assessment",
+      "Python",
+      "Burp Suite"
+    ]
+  },
+
+  "Android Developer": {
+    "skills": [
+      "Java",
+      "Kotlin",
+      "Android Studio",
+      "XML",
+      "REST API",
+      "Git",
+      "SQLite",
+      "Firebase"
+    ]
+  },
+
+  "iOS Developer": {
+    "skills": [
+      "Swift",
+      "SwiftUI",
+      "Xcode",
+      "iOS SDK",
+      "REST API",
+      "Git",
+      "Core Data",
+      "Firebase"
+    ]
+  },
+
+  "Software Test Engineer (QA)": {
+    "skills": [
+      "Manual Testing",
+      "Test Cases",
+      "Bug Tracking",
+      "JIRA",
+      "API Testing",
+      "SQL",
+      "Postman",
+      "Agile"
+    ]
+  },
+
+  "Automation Test Engineer": {
+    "skills": [
+      "Java",
+      "Selenium",
+      "TestNG",
+      "JUnit",
+      "API Testing",
+      "Postman",
+      "Git",
+      "Jenkins"
+    ]
   }
 }

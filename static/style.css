@@ -363,3 +363,30 @@ tr:hover td {
     opacity:0.7;
     cursor:not-allowed;
 }
+.search-box {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px;
+}
+
+.search-box input {
+    width: 300px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background-color: #b02a37;
+}
