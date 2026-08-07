@@ -8,9 +8,34 @@
 
 <h1>📊 JMS Analyzer Dashboard</h1>
 
-<h2>Total Reports: {{ total_reports }}</h2>
-<h2>Average Score: {{ average_score }}%</h2>
-<h2>Highest Score: {{ highest_score }}%</h2>
+<div class="dashboard-cards">
+
+    <div class="dashboard-card">
+        <h3>📄 Total Reports</h3>
+        <p>{{ total_reports }}</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>📊 Average Score</h3>
+        <p>{{ average_score }}%</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>🏆 Highest Score</h3>
+        <p>{{ highest_score }}%</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>💼 Unique Dream Jobs</h3>
+        <p>{{ unique_jobs }}</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>🔥 Most Analyzed Job</h3>
+        <p class="job-name">{{ most_analyzed_job }}</p>
+    </div>
+
+</div>
 
 <h3>Recent Reports</h3>
 
