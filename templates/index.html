@@ -1,52 +1,118 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>JMS Analyzer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block title %}
+JMS Analyzer
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================
+     HERO SECTION
+========================================== -->
+
+<section class="hero-section">
 
     <h1>JMS Analyzer</h1>
 
     <h2>Job Market Skills Analyser</h2>
 
-    <h3>Welcome, {{ username }} 👋</h3>
-
-    <p>Analyze • Learn • Grow</p>
-
-    <hr>
-
-    <h2>Welcome!</h2>
-
-    <p>
-        This project helps users analyze their skills and
-        find missing skills for their dream job.
+    <p class="hero-tagline">
+        Analyze • Learn • Grow
     </p>
 
-    <a href="/user-type">
-        <button class="green-btn">
-            Analyze Skills
-        </button>
-    </a>
+    <p class="hero-description">
+        Discover how well your current skills match
+        your dream job, identify missing skills,
+        and get a personalized learning roadmap.
+    </p>
 
-    <br><br>
 
-    <a href="/history">
-        <button class="blue-btn">
-            📊 View Analysis History
-        </button>
-    </a>
+    <!-- MAIN ACTIONS -->
 
-    <a href="/dashboard" class="blue-btn">
-       Dashboard
-    </a>
+    <div class="home-actions">
 
-    
+        <a href="{{ url_for('user_type') }}"
+           class="green-btn">
+            Analyze My Skills
+        </a>
 
-    <br><br>
+        <a href="{{ url_for('dashboard') }}"
+           class="purple-btn">
+            View Dashboard
+        </a>
 
-    <h3>Thank You!</h3>
+        <a href="{{ url_for('history') }}"
+           class="blue-btn">
+            Analysis History
+        </a>
 
-</body>
-</html>
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FEATURES SECTION
+========================================== -->
+
+<section class="home-features">
+
+    <h2>What Can JMS Analyzer Do?</h2>
+
+    <div class="feature-container">
+
+        <div class="feature-card">
+
+            <h3>🎯 Skill Analysis</h3>
+
+            <p>
+                Compare your existing skills with
+                the skills required for your dream job.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>📄 Resume Analysis</h3>
+
+            <p>
+                Upload your PDF or DOCX resume
+                and automatically detect your
+                technical skills.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>📚 Learning Roadmap</h3>
+
+            <p>
+                Get a personalized roadmap based
+                on the skills you still need to learn.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>📊 Progress Insights</h3>
+
+            <p>
+                View your skill-match score,
+                analysis history and dashboard
+                statistics.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

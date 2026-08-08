@@ -1,65 +1,197 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-<h1>📊 JMS Analyzer Dashboard</h1>
+{% block title %}
+Dashboard - JMS Analyzer
+{% endblock %}
 
-<div class="dashboard-cards">
 
-    <div class="dashboard-card">
-        <h3>📄 Total Reports</h3>
-        <p>{{ total_reports }}</p>
+{% block content %}
+
+<section class="dashboard-page">
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <div class="dashboard-header">
+
+        <h1>JMS Dashboard</h1>
+
+        <p>
+            View your overall skill analysis
+            statistics and previous results.
+        </p>
+
     </div>
 
-    <div class="dashboard-card">
-        <h3>📊 Average Score</h3>
-        <p>{{ average_score }}%</p>
+
+    <!-- =========================================
+         DASHBOARD STATISTICS
+    ========================================== -->
+
+    <div class="dashboard-cards">
+
+        <div class="dashboard-card">
+
+            <h3>📄 Total Reports</h3>
+
+            <p>{{ total_reports }}</p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>📊 Average Score</h3>
+
+            <p>{{ average_score }}%</p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>🏆 Highest Score</h3>
+
+            <p>{{ highest_score }}%</p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>💼 Unique Dream Jobs</h3>
+
+            <p>{{ unique_jobs }}</p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>🔥 Most Analyzed Job</h3>
+
+            <p class="job-name">
+                {{ most_analyzed_job }}
+            </p>
+
+        </div>
+
     </div>
 
-    <div class="dashboard-card">
-        <h3>🏆 Highest Score</h3>
-        <p>{{ highest_score }}%</p>
+
+    <!-- =========================================
+         RECENT ANALYSIS
+    ========================================== -->
+
+    <section class="dashboard-reports">
+
+        <h2>Recent Analysis Reports</h2>
+
+        {% if reports %}
+
+        <div class="table-responsive">
+
+            <table class="dashboard-table">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Dream Job</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for report in reports %}
+
+                    <tr>
+
+                        <td>
+                            {{ report[0] }}
+                        </td>
+
+                        <td>
+                            {{ report[1] }}
+                        </td>
+
+                        <td>
+                            {{ report[2] }}%
+                        </td>
+
+                        <td>
+                            {{ report[3] }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="dashboard-empty">
+
+            <h3>No Analysis Reports Yet</h3>
+
+            <p>
+                Analyze your skills to start
+                building your dashboard.
+            </p>
+
+            <a href="{{ url_for('user_type') }}"
+               class="green-btn">
+
+                Analyze My Skills
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- =========================================
+         ACTIONS
+    ========================================== -->
+
+    <div class="action-buttons">
+
+        <a href="{{ url_for('user_type') }}"
+           class="green-btn">
+
+            🎯 New Analysis
+
+        </a>
+
+        <a href="{{ url_for('history') }}"
+           class="purple-btn">
+
+            📜 Full History
+
+        </a>
+
+        <a href="{{ url_for('home') }}"
+           class="blue-btn">
+
+            🏠 Home
+
+        </a>
+
     </div>
 
-    <div class="dashboard-card">
-        <h3>💼 Unique Dream Jobs</h3>
-        <p>{{ unique_jobs }}</p>
-    </div>
+</section>
 
-    <div class="dashboard-card">
-        <h3>🔥 Most Analyzed Job</h3>
-        <p class="job-name">{{ most_analyzed_job }}</p>
-    </div>
-
-</div>
-
-<h3>Recent Reports</h3>
-
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Dream Job</th>
-        <th>Score</th>
-        <th>Status</th>
-    </tr>
-
-    {% for report in reports %}
-    <tr>
-        <td>{{ report[0] }}</td>
-        <td>{{ report[1] }}</td>
-        <td>{{ report[2] }}%</td>
-        <td>{{ report[3] }}</td>
-    </tr>
-    {% endfor %}
-</table>
-
-<br>
-
-<a href="/">🏠 Home</a>
-
-</body>
-</html>
+{% endblock %}

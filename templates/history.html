@@ -1,108 +1,241 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
+{% block title %}
+Analysis History - JMS Analyzer
+{% endblock %}
 
-    <title>JMS Analyzer - History</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+{% block content %}
 
-</head>
+<section class="history-page">
 
-<body>
+    <!-- =========================================
+         HEADER
+    ========================================== -->
 
-<div class="container">
+    <div class="history-header">
 
-    <h1>📊 JMS ANALYZER</h1>
+        <h1>Analysis History</h1>
 
-    <h2>Analysis History</h2>
+        <p>
+            Search, review, export and manage
+            your previous skill analysis reports.
+        </p>
 
-    <form action="/history" method="GET" class="search-box">
+    </div>
 
-    <input
-        type="text"
-        name="search"
-        placeholder="Search Dream Job..."
-        value="{{ keyword if keyword else '' }}">
 
-    <button type="submit" class="blue-btn">
-        🔍 Search
-    </button>
+    <!-- =========================================
+         SEARCH + EXPORT
+    ========================================== -->
 
-    </form>
-    <a href="/export-csv" class="green-btn">
-      📥 Export CSV
-    </a>
-    <a href="/export-excel" class="excel-btn">
-      📊 Export Excel
-    </a>
+    <div class="history-actions">
+
+        <!-- SEARCH -->
+
+        <form action="{{ url_for('history') }}"
+              method="GET"
+              class="search-box">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search Dream Job..."
+                value="{{ keyword if keyword else '' }}">
+
+            <button type="submit"
+                    class="blue-btn">
+
+                🔍 Search
+
+            </button>
+
+        </form>
+
+
+        <!-- EXPORT CSV -->
+
+        <a href="{{ url_for('export_csv') }}"
+           class="green-btn">
+
+            📥 Export CSV
+
+        </a>
+
+
+        <!-- EXPORT EXCEL -->
+
+        <a href="{{ url_for('export_excel') }}"
+           class="excel-btn">
+
+            📊 Export Excel
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================================
+         HISTORY TABLE
+    ========================================== -->
 
     {% if reports %}
 
-    <table class="history-table">
+    <div class="history-table-wrapper">
 
-        <tr>
+        <table class="history-table">
 
-            <th>ID</th>
-            <th>Dream Job</th>
-            <th>Score</th>
-            <th>Status</th>
-            <th>Found Skills</th>
-            <th>Missing Skills</th>
-            <th>Action</th>
+            <thead>
 
-        </tr>
+                <tr>
 
-        {% for report in reports %}
+                    <th>ID</th>
 
-        <tr>
+                    <th>Dream Job</th>
 
-            <td>{{ report[0] }}</td>
+                    <th>Score</th>
 
-            <td>{{ report[1] }}</td>
+                    <th>Status</th>
 
-            <td>{{ report[2] }}%</td>
+                    <th>Found Skills</th>
 
-            <td>{{ report[3] }}</td>
+                    <th>Missing Skills</th>
 
-            <td>{{ report[4] }}</td>
+                    <th>Action</th>
 
-            <td>{{ report[5] }}</td>
+                </tr>
 
-            <td>
-                <form action="/delete-report/{{ report[0] }}" method="POST"
-                   onsubmit="return confirm('Are you sure you want to delete this report?');">
+            </thead>
 
-                 <button type="submit" class="delete-btn">
-                  🗑️ Delete
-                 </button>
 
-                 </form>
-            </td>
+            <tbody>
 
-        </tr>
+                {% for report in reports %}
 
-        {% endfor %}
+                <tr>
 
-    </table>
+                    <td>
+                        {{ report[0] }}
+                    </td>
+
+
+                    <td class="history-job">
+                        {{ report[1] }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="history-score">
+                            {{ report[2] }}%
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ report[3] }}
+                    </td>
+
+
+                    <td class="history-skills">
+                        {{ report[4] }}
+                    </td>
+
+
+                    <td class="history-skills">
+                        {{ report[5] }}
+                    </td>
+
+
+                    <td>
+
+                        <form
+                            action="{{ url_for('delete_report_route', report_id=report[0]) }}"
+                            method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this report?');">
+
+                            <button
+                                type="submit"
+                                class="delete-btn">
+
+                                🗑️ Delete
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 
     {% else %}
 
-    <h3>No reports found.</h3>
+    <!-- =========================================
+         EMPTY HISTORY
+    ========================================== -->
+
+    <div class="history-empty">
+
+        <h3>No Reports Found</h3>
+
+        <p>
+            No analysis reports match your search,
+            or you haven't performed an analysis yet.
+        </p>
+
+        <a href="{{ url_for('user_type') }}"
+           class="green-btn">
+
+            Analyze My Skills
+
+        </a>
+
+    </div>
 
     {% endif %}
 
-    <br><br>
 
-    <a href="/">
-        <button class="blue-btn">
-            ⬅ Back to Home
-        </button>
-    </a>
+    <!-- =========================================
+         BOTTOM ACTIONS
+    ========================================== -->
 
-</div>
+    <div class="action-buttons">
 
-</body>
+        <a href="{{ url_for('dashboard') }}"
+           class="purple-btn">
 
-</html>
+            📊 Dashboard
+
+        </a>
+
+
+        <a href="{{ url_for('user_type') }}"
+           class="green-btn">
+
+            🎯 New Analysis
+
+        </a>
+
+
+        <a href="{{ url_for('home') }}"
+           class="blue-btn">
+
+            🏠 Home
+
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

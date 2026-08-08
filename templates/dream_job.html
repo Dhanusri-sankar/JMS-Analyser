@@ -1,79 +1,194 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>Dream Job</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% block title %}
+Dream Job - JMS Analyzer
+{% endblock %}
 
-<body>
 
-    <h1>JMS ANALYZER</h1>
+{% block content %}
+
+<section class="hero-section">
+
+    <h1>JMS Analyzer</h1>
 
     <h2>Select Your Dream Job</h2>
 
-    <form action="/skills" method="POST">
+    <p class="hero-description">
+        Choose the career you want to pursue.
+        JMS Analyzer will compare your current skills
+        with the skills required for this role.
+    </p>
 
-        <select name="dream_job" required>
 
-            <option value="">-- Select Dream Job --</option>
+    <form action="{{ url_for('skills') }}" method="POST">
+
+        <select name="dream_job" class="dream-job-select" required>
+
+            <option value="">
+                -- Select Dream Job --
+            </option>
+
+
+            <!-- Programming -->
 
             <optgroup label="Programming">
-                <option value="Python Developer">Python Developer</option>
-                <option value="Java Developer">Java Developer</option>
-                <option value="C++ Developer">C++ Developer</option>
-                <option value="Frontend Developer">Frontend Developer</option>
-                <option value="Backend Developer">Backend Developer</option>
-                <option value="Full Stack Developer">Full Stack Developer</option>
-                <option value="React Developer">React Developer</option>
-                <option value="Node.js Developer">Node.js Developer</option>
+
+                <option value="Python Developer">
+                    Python Developer
+                </option>
+
+                <option value="Java Developer">
+                    Java Developer
+                </option>
+
+                <option value="C++ Developer">
+                    C++ Developer
+                </option>
+
+                <option value="Frontend Developer">
+                    Frontend Developer
+                </option>
+
+                <option value="Backend Developer">
+                    Backend Developer
+                </option>
+
+                <option value="Full Stack Developer">
+                    Full Stack Developer
+                </option>
+
+                <option value="React Developer">
+                    React Developer
+                </option>
+
+                <option value="Node.js Developer">
+                    Node.js Developer
+                </option>
+
             </optgroup>
+
+
+            <!-- Data -->
 
             <optgroup label="Data">
-                <option value="Data Analyst">Data Analyst</option>
-                <option value="Data Engineer">Data Engineer</option>
-                <option value="Data Scientist">Data Scientist</option>
-                <option value="Business Intelligence (BI) Developer">Business Intelligence (BI) Developer</option>
+
+                <option value="Data Analyst">
+                    Data Analyst
+                </option>
+
+                <option value="Data Engineer">
+                    Data Engineer
+                </option>
+
+                <option value="Data Scientist">
+                    Data Scientist
+                </option>
+
+                <option value="Business Intelligence (BI) Developer">
+                    Business Intelligence (BI) Developer
+                </option>
+
             </optgroup>
+
+
+            <!-- Artificial Intelligence -->
 
             <optgroup label="Artificial Intelligence">
-                <option value="AI Engineer">AI Engineer</option>
-                <option value="Machine Learning Engineer">Machine Learning Engineer</option>
-                <option value="Deep Learning Engineer">Deep Learning Engineer</option>
-                <option value="NLP Engineer">NLP Engineer</option>
+
+                <option value="AI Engineer">
+                    AI Engineer
+                </option>
+
+                <option value="Machine Learning Engineer">
+                    Machine Learning Engineer
+                </option>
+
+                <option value="Deep Learning Engineer">
+                    Deep Learning Engineer
+                </option>
+
+                <option value="NLP Engineer">
+                    NLP Engineer
+                </option>
+
             </optgroup>
+
+
+            <!-- Cloud & DevOps -->
 
             <optgroup label="Cloud & DevOps">
-                <option value="Cloud Engineer">Cloud Engineer</option>
-                <option value="DevOps Engineer">DevOps Engineer</option>
-                <option value="Site Reliability Engineer (SRE)">Site Reliability Engineer (SRE)</option>
+
+                <option value="Cloud Engineer">
+                    Cloud Engineer
+                </option>
+
+                <option value="DevOps Engineer">
+                    DevOps Engineer
+                </option>
+
+                <option value="Site Reliability Engineer (SRE)">
+                    Site Reliability Engineer (SRE)
+                </option>
+
             </optgroup>
+
+
+            <!-- Cyber Security -->
 
             <optgroup label="Cyber Security">
-                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
-                <option value="Ethical Hacker">Ethical Hacker</option>
+
+                <option value="Cybersecurity Analyst">
+                    Cybersecurity Analyst
+                </option>
+
+                <option value="Ethical Hacker">
+                    Ethical Hacker
+                </option>
+
             </optgroup>
+
+
+            <!-- Mobile Development -->
 
             <optgroup label="Mobile Development">
-                <option value="Android Developer">Android Developer</option>
-                <option value="iOS Developer">iOS Developer</option>
+
+                <option value="Android Developer">
+                    Android Developer
+                </option>
+
+                <option value="iOS Developer">
+                    iOS Developer
+                </option>
+
             </optgroup>
 
+
+            <!-- Testing -->
+
             <optgroup label="Testing">
-                <option value="Software Test Engineer (QA)">Software Test Engineer (QA)</option>
-                <option value="Automation Test Engineer">Automation Test Engineer</option>
+
+                <option value="Software Test Engineer (QA)">
+                    Software Test Engineer (QA)
+                </option>
+
+                <option value="Automation Test Engineer">
+                    Automation Test Engineer
+                </option>
+
             </optgroup>
 
         </select>
 
-        <br><br>
+
+        <br><br><br>
+
 
         <button class="purple-btn" type="submit">
-            Next →
+            Continue →
         </button>
 
     </form>
 
-</body>
+</section>
 
-</html>
+{% endblock %}

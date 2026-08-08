@@ -1,145 +1,284 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>JMS Analyzer - Analysis Report</title>
+{% block title %}
+Analysis Report - JMS Analyzer
+{% endblock %}
 
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% block content %}
 
-<body>
+<section class="analysis-page">
 
-<div class="header">
-    <h1>📊 JMS ANALYZER</h1>
-    <p>Job Market Skill Analysis Dashboard</p>
-</div>
+    <!-- =========================================
+         PAGE HEADER
+    ========================================== -->
 
-<h2>Analysis Report</h2>
-<hr>
+    <div class="analysis-header">
 
-<!-- Dream Job -->
-<div class="dream-job-box">
-    <h2>🎯 Dream Job</h2>
-    <h3>{{ dream_job }}</h3>
-</div>
+        <h1>Skill Analysis Report</h1>
 
-<!-- Summary Cards -->
-<div class="summary-container">
+        <p>
+            Your skill readiness analysis for
+        </p>
 
-    <div class="card">
-        <h3>Skills Selected</h3>
-        <h1>{{ selected_count }}</h1>
+        <h2>{{ dream_job }}</h2>
+
     </div>
 
-    <div class="card">
-        <h3>Skills Found</h3>
-        <h1>{{ found_count }}</h1>
+
+    <!-- =========================================
+         STATUS
+    ========================================== -->
+
+    <div class="status-box">
+        {{ status }}
     </div>
 
-    <div class="card">
-        <h3>Skills Missing</h3>
-        <h1>{{ missing_count }}</h1>
+
+    <!-- =========================================
+         SUMMARY CARDS
+    ========================================== -->
+
+    <div class="summary-container">
+
+        <div class="card selected-card">
+
+            <h3>Skills Selected</h3>
+
+            <h1>{{ selected_count }}</h1>
+
+        </div>
+
+
+        <div class="card found-card">
+
+            <h3>Skills Found</h3>
+
+            <h1>{{ found_count }}</h1>
+
+        </div>
+
+
+        <div class="card missing-card">
+
+            <h3>Skills Missing</h3>
+
+            <h1>{{ missing_count }}</h1>
+
+        </div>
+
+
+        <div class="card score-card">
+
+            <h3>Readiness Score</h3>
+
+            <h1>{{ percentage }}%</h1>
+
+        </div>
+
     </div>
 
-    <div class="card">
-        <h3>Readiness Score</h3>
-        <h1>{{ percentage }}%</h1>
+
+    <!-- =========================================
+         READINESS PROGRESS
+    ========================================== -->
+
+    <section class="analysis-section">
+
+        <h2>Job Readiness</h2>
+
+        <div class="progress-container">
+
+            <div class="progress-bar"
+                 style="width: {{ percentage }}%;">
+
+                {{ percentage }}%
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FOUND SKILLS
+    ========================================== -->
+
+    <section class="analysis-section">
+
+        <h2>Skills You Already Have</h2>
+
+        <div class="skills-box">
+
+            {% if found_skills %}
+
+                {% for skill in found_skills %}
+
+                    <span class="found-tag">
+                        ✓ {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="empty-message">
+                    No matching skills were found.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         MISSING SKILLS
+    ========================================== -->
+
+    <section class="analysis-section">
+
+        <h2>Skills You Need to Learn</h2>
+
+        <div class="skills-box">
+
+            {% if missing_skills %}
+
+                {% for skill in missing_skills %}
+
+                    <span class="missing-tag">
+                        {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="success-message">
+                    🎉 You have all the required skills!
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SKILL DISTRIBUTION CHART
+    ========================================== -->
+
+    <section class="analysis-section">
+
+        <h2>Skill Distribution</h2>
+
+        <div class="chart-container">
+
+            {{ graph | safe }}
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         RECOMMENDATION
+    ========================================== -->
+
+    <section class="analysis-section">
+
+        <h2>Recommendation</h2>
+
+        <div class="recommendation-box">
+
+            <p>
+                {{ recommendation }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         LEARNING ROADMAP
+    ========================================== -->
+
+    <section class="analysis-section">
+
+        <h2>Your Learning Roadmap</h2>
+
+        <p class="roadmap-description">
+            Follow these steps to improve your
+            readiness for {{ dream_job }}.
+        </p>
+
+
+        <div class="roadmap-box">
+
+            {% for step in roadmap %}
+
+                <div class="roadmap-step">
+
+                    <span class="roadmap-number">
+                        {{ loop.index }}
+                    </span>
+
+                    <span>
+                        {{ step }}
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         ACTION BUTTONS
+    ========================================== -->
+
+    <div class="action-buttons">
+
+        <a href="{{ url_for('user_type') }}"
+           class="purple-btn">
+
+            🔄 Analyze Again
+
+        </a>
+
+
+        <a href="{{ url_for('history') }}"
+           class="green-btn">
+
+            📜 View History
+
+        </a>
+
+
+        <a href="{{ url_for('download_report') }}"
+           class="orange-btn">
+
+            📄 Download PDF
+
+        </a>
+
+
+        <a href="{{ url_for('home') }}"
+           class="blue-btn">
+
+            🏠 Home
+
+        </a>
+
     </div>
 
-</div>
+</section>
 
-<hr>
-
-<div class="status-box">
-    <h2>{{ status }}</h2>
-</div>
-
-<hr>
-
-<h2>✔ Your Selected Skills</h2>
-
-<div class="skills-box">
-{% for skill in skills %}
-    <span class="skill-tag">{{ skill }}</span>
-{% endfor %}
-</div>
-
-<hr>
-
-<h2>✅ Skills You Have</h2>
-
-<div class="skills-box">
-{% for skill in found_skills %}
-    <span class="found-tag">{{ skill }}</span>
-{% endfor %}
-</div>
-
-<hr>
-
-<h2>❌ Skills to Learn</h2>
-
-<div class="skills-box">
-{% for skill in missing_skills %}
-    <span class="missing-tag">{{ skill }}</span>
-{% endfor %}
-</div>
-
-<hr>
-
-<h2>🎯 Skill Match</h2>
-
-<div class="progress-container">
-    <div class="progress-bar" style="width: {{ percentage }}%;">
-        {{ percentage }}%
-    </div>
-</div>
-
-<hr>
-
-<div class="recommendation-box">
-    <h2>💡 Recommendation</h2>
-    <p>{{ recommendation }}</p>
-</div>
-
-<hr>
-
-<h2>📈 Skill Distribution</h2>
-
-<div class="chart-container">
-    {{ graph|safe }}
-</div>
-
-<hr>
-
-<h2>📚 Personalized Learning Roadmap</h2>
-
-<div class="roadmap-box">
-
-{% for step in roadmap %}
-
-<div class="roadmap-step">
-    {{ step }}
-</div>
-
-{% endfor %}
-
-</div>
-
-<hr>
-
-<div class="action-buttons">
-
-    <a href="/" class="blue-btn">🏠 Home</a>
-
-    <a href="/history" class="green-btn">📜 View History</a>
-
-    <a href="/download-report" class="orange-btn">
-      📄 Download PDF
-    </a>
-
-</div>
-
-</body>
-</html>
+{% endblock %}

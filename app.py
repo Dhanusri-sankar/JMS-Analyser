@@ -21,7 +21,13 @@ from werkzeug.utils import secure_filename
 
 from pdf_generator import generate_pdf
 from resume_parser import extract_skills
-from analyzer import get_required_skills, analyze
+
+from analyzer import (
+    get_required_skills,
+    analyze,
+    calculate_weighted_score
+)
+
 from roadmap import ROADMAP
 
 from models import (
@@ -39,6 +45,7 @@ from models import (
 # ==================================================
 
 app = Flask(__name__)
+
 # Maximum resume upload size: 5 MB
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
 
@@ -194,7 +201,7 @@ def export_csv():
             report[5]
         ])
 
-    # UTF-8 BOM helps Excel display Unicode
+    # UTF-8 BOM helps Excel display Unicode correctly
     csv_data = "\ufeff" + output.getvalue()
 
     response = Response(
@@ -463,30 +470,18 @@ def analysis():
 
 
     # ------------------------------------------------
-    # CALCULATE SCORE
+    # V5 WEIGHTED READINESS SCORE
     # ------------------------------------------------
 
-    total_required = len(
+    percentage = calculate_weighted_score(
+        found_skills,
         required_skills
     )
 
-    total_found = len(
-        found_skills
-    )
 
-    if total_required == 0:
-
-        percentage = 0
-
-    else:
-
-        percentage = int(
-            (
-                total_found
-                / total_required
-            ) * 100
-        )
-
+    # ------------------------------------------------
+    # SKILL COUNTS
+    # ------------------------------------------------
 
     selected_count = len(
         selected_skills
@@ -589,7 +584,7 @@ def analysis():
 
 
     # ------------------------------------------------
-    # PERSONALIZED ROADMAP
+    # SMART PERSONALIZED ROADMAP - V5
     # ------------------------------------------------
 
     roadmap = []
@@ -598,19 +593,38 @@ def analysis():
 
     for skill in missing_skills:
 
-        if skill in ROADMAP:
-
-            roadmap.append(
-                f"Week {week}: "
-                f"{ROADMAP[skill]}"
+        # Use predefined roadmap if available.
+        # Otherwise automatically create a learning step.
+        learning_step = ROADMAP.get(
+            skill,
+            (
+                f"Learn {skill} Fundamentals "
+                "and Practice with Hands-on Exercises"
             )
+        )
 
-            week += 1
+        roadmap.append(
+            f"Week {week}: {learning_step}"
+        )
 
-    roadmap.append(
-        f"Week {week}: "
-        "Build a Mini Project"
-    )
+        week += 1
+
+
+    # If the user still has missing skills
+    if missing_skills:
+
+        roadmap.append(
+            f"Week {week}: "
+            "Build a Mini Project using the skills you learned"
+        )
+
+    # If the user already has all required skills
+    else:
+
+        roadmap.append(
+            "Week 1: "
+            "Build an Advanced Project and strengthen your portfolio"
+        )
 
 
     # ------------------------------------------------

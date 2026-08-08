@@ -1,28 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Type</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block title %}
+User Type - JMS Analyzer
+{% endblock %}
 
-    <h1>JMS ANALYZER</h1>
+{% block content %}
 
-    <hr>
+<section class="hero-section">
 
-    <h2>Who are you?</h2>
+    <h1>JMS Analyzer</h1>
 
-    <p>Select the option that best describes you.</p>
-    
-    <a href="/dream-job">
-    <button class="blue-btn">🎓 Fresher</button>
-</a>
+    <h2>Who Are You?</h2>
 
-<br><br>
+    <p class="hero-description">
+        Select the option that best describes you
+        to begin your skill analysis.
+    </p>
 
-<a href="/dream-job">
-    <button class="blue-btn">💼 Professional</button>
-</a>
-</body>
-</html>
+    <div class="home-actions">
+
+        <!-- Fresher -->
+        <a href="{{ url_for('dream_job') }}"
+           class="blue-btn">
+            🎓 Fresher
+        </a>
+
+        <!-- Professional -->
+        <a href="{{ url_for('dream_job') }}"
+           class="blue-btn">
+            💼 Professional
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

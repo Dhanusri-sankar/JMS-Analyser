@@ -1,58 +1,114 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>Skills</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% block title %}
+Skills - JMS Analyzer
+{% endblock %}
 
-<body>
 
-    <h1>JMS ANALYZER</h1>
+{% block content %}
 
-    <hr>
+<section class="skills-page">
+
+    <h1>JMS Analyzer</h1>
 
     <h2>Select Your Current Skills</h2>
 
-    <h3>{{ dream_job }}</h3>
+    <!-- Selected Dream Job -->
 
-    <p>Select all the skills you already know or upload your resume.</p>
+    <div class="selected-job-card">
+        <span>Dream Job</span>
+        <h3>{{ dream_job }}</h3>
+    </div>
 
-    <form action="/analysis" method="POST" enctype="multipart/form-data">
+    <p class="hero-description">
+        Select all the skills you already know,
+        or upload your resume to automatically detect your skills.
+    </p>
 
-        <!-- Hidden field to send dream job -->
-        <input type="hidden" name="dream_job" value="{{ dream_job }}">
 
-        {% for skill in required_skills %}
+    <form action="{{ url_for('analysis') }}"
+          method="POST"
+          enctype="multipart/form-data">
 
-        <div class="skill-item">
-            <input
-                type="checkbox"
-                name="skills"
-                value="{{ skill }}">
+        <!-- Keep dream job when form is submitted -->
 
-            <label>{{ skill }}</label>
+        <input type="hidden"
+               name="dream_job"
+               value="{{ dream_job }}">
+
+
+        <!-- =====================================
+             SKILL SELECTION
+        ====================================== -->
+
+        <div class="skills-selection">
+
+            {% for skill in required_skills %}
+
+            <label class="skill-checkbox">
+
+                <input type="checkbox"
+                       name="skills"
+                       value="{{ skill }}">
+
+                <span>{{ skill }}</span>
+
+            </label>
+
+            {% endfor %}
+
         </div>
 
-        {% endfor %}
 
-        <br>
+        <!-- =====================================
+             DIVIDER
+        ====================================== -->
 
-        <h3>OR Upload Your Resume</h3>
+        <div class="or-divider">
 
-        <input
-            type="file"
-            name="resume"
-            accept=".pdf,.docx">
+            <span>OR</span>
 
-        <br><br>
+        </div>
 
-        <button class="orange-btn" type="submit">
-            Analyze Skills
-        </button>
+
+        <!-- =====================================
+             RESUME UPLOAD
+        ====================================== -->
+
+        <div class="resume-upload-box">
+
+            <h3>📄 Upload Your Resume</h3>
+
+            <p>
+                Upload a PDF or DOCX resume and
+                JMS Analyzer will automatically detect
+                your technical skills.
+            </p>
+
+            <input type="file"
+                   name="resume"
+                   accept=".pdf,.docx">
+
+        </div>
+
+
+        <!-- =====================================
+             ANALYZE BUTTON
+        ====================================== -->
+
+        <div class="analyze-action">
+
+            <button class="orange-btn"
+                    type="submit">
+
+                Analyze Skills →
+
+            </button>
+
+        </div>
 
     </form>
 
-</body>
+</section>
 
-</html>
+{% endblock %}

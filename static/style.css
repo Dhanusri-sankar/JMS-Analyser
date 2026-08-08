@@ -782,3 +782,1109 @@ tr:hover td {
         font-size: 14px;
     }
 }
+/* ==================================================
+   V5 - PROFESSIONAL NAVIGATION BAR
+================================================== */
+
+.navbar {
+    width: 100%;
+    min-height: 70px;
+    background: #181818;
+    border-bottom: 1px solid #333;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 6%;
+}
+
+.nav-logo {
+    color: lightseagreen;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #dddddd;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: lightseagreen;
+}
+
+
+/* ==================================================
+   V5 - HERO SECTION
+================================================== */
+
+.hero-section {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.hero-section h1 {
+    max-width: 850px;
+    margin: 20px auto;
+
+    font-size: 55px;
+    color: lightseagreen;
+
+    border: none;
+    padding: 10px;
+}
+
+.hero-section h2 {
+    margin-top: 10px;
+    color: #ff4785;
+}
+
+.hero-tagline {
+    color: gold;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.hero-description {
+    max-width: 750px;
+    margin: 25px auto;
+
+    color: #cccccc;
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+
+/* ==================================================
+   V5 - HOME ACTION BUTTONS
+================================================== */
+
+.home-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    margin-top: 35px;
+}
+
+.home-actions a {
+    min-width: 180px;
+}
+
+
+/* ==================================================
+   V5 - FEATURES SECTION
+================================================== */
+
+.home-features {
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 20px;
+}
+
+.home-features > h2 {
+    margin-bottom: 40px;
+}
+
+.feature-container {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+.feature-card {
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+
+    border-radius: 15px;
+
+    padding: 25px 20px;
+
+    min-height: 230px;
+
+    transition:
+        transform 0.3s,
+        border-color 0.3s,
+        box-shadow 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-7px);
+
+    border-color: lightseagreen;
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.4);
+}
+
+.feature-card h3 {
+    color: lightseagreen;
+
+    font-size: 21px;
+
+    margin-top: 10px;
+}
+
+.feature-card p {
+    color: #cccccc;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+}
+
+
+/* ==================================================
+   V5 - FOOTER
+================================================== */
+
+.footer {
+    margin-top: 70px;
+
+    padding: 25px 15px;
+
+    background: #181818;
+
+    border-top: 1px solid #333;
+}
+
+.footer p {
+    color: #888888;
+
+    font-size: 15px;
+
+    margin: 0;
+}
+
+
+/* ==================================================
+   V5 - TABLET RESPONSIVE
+================================================== */
+
+@media screen and (max-width: 900px) {
+
+    .navbar {
+        padding: 0 4%;
+    }
+
+    .nav-links {
+        gap: 18px;
+    }
+
+    .feature-container {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .hero-section h1 {
+        font-size: 45px;
+    }
+}
+
+
+/* ==================================================
+   V5 - MOBILE RESPONSIVE
+================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .navbar {
+        flex-direction: column;
+
+        justify-content: center;
+
+        padding: 15px 10px;
+
+        gap: 15px;
+    }
+
+    .nav-logo {
+        font-size: 20px;
+    }
+
+    .nav-links {
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 12px 20px;
+    }
+
+    .nav-links a {
+        font-size: 15px;
+    }
+
+
+    /* HERO */
+
+    .hero-section {
+        margin: 30px auto;
+
+        padding: 15px;
+    }
+
+    .hero-section h1 {
+        font-size: 34px;
+
+        margin: 10px auto;
+    }
+
+    .hero-section h2 {
+        font-size: 24px;
+    }
+
+    .hero-tagline {
+        font-size: 19px;
+    }
+
+    .hero-description {
+        font-size: 17px;
+
+        line-height: 1.6;
+    }
+
+
+    /* HOME BUTTONS */
+
+    .home-actions {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .home-actions a {
+        width: 90%;
+
+        max-width: 320px;
+    }
+
+
+    /* FEATURES */
+
+    .home-features {
+        margin: 40px auto;
+
+        padding: 15px;
+    }
+
+    .feature-container {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        width: 100%;
+
+        min-height: auto;
+    }
+
+
+    /* FOOTER */
+
+    .footer {
+        margin-top: 40px;
+    }
+}
+/* ==================================================
+   V5 - DREAM JOB SELECT
+================================================== */
+
+.dream-job-select {
+    width: 420px;
+    max-width: 90%;
+
+    padding: 14px 16px;
+
+    background: #1c1c1c;
+    color: white;
+
+    border: 1px solid #444;
+    border-radius: 8px;
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+.dream-job-select:focus {
+    outline: none;
+    border-color: lightseagreen;
+}
+
+.dream-job-select option,
+.dream-job-select optgroup {
+    background: #1c1c1c;
+    color: white;
+}
+/* ==================================================
+   V5 - SKILLS PAGE
+================================================== */
+
+.skills-page {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.skills-page > h1 {
+    border: none;
+    margin: 10px auto 25px;
+    padding: 10px;
+}
+
+.selected-job-card {
+    width: 420px;
+    max-width: 90%;
+
+    margin: 25px auto;
+    padding: 18px;
+
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+    border-radius: 12px;
+}
+
+.selected-job-card span {
+    color: #999;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.selected-job-card h3 {
+    margin: 8px 0 0;
+    font-size: 24px;
+}
+
+
+/* SKILL GRID */
+
+.skills-selection {
+    max-width: 750px;
+
+    margin: 35px auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+
+/* INDIVIDUAL SKILL */
+
+.skill-checkbox {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px 18px;
+
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+
+    border-radius: 10px;
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.skill-checkbox:hover {
+    border-color: lightseagreen;
+
+    transform: translateY(-2px);
+}
+
+.skill-checkbox input {
+    width: 18px;
+    height: 18px;
+
+    cursor: pointer;
+
+    accent-color: lightseagreen;
+}
+
+
+/* OR DIVIDER */
+
+.or-divider {
+    max-width: 750px;
+
+    margin: 40px auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.or-divider::before,
+.or-divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #444;
+}
+
+.or-divider span {
+    color: gold;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+/* RESUME UPLOAD */
+
+.resume-upload-box {
+    max-width: 650px;
+
+    margin: 20px auto;
+
+    padding: 30px;
+
+    background: #1c1c1c;
+
+    border: 1px dashed #555;
+
+    border-radius: 15px;
+}
+
+.resume-upload-box h3 {
+    margin-top: 0;
+    color: gold;
+}
+
+.resume-upload-box p {
+    color: #aaa;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+.resume-upload-box input[type="file"] {
+    margin-top: 15px;
+
+    color: white;
+}
+
+
+/* ANALYZE BUTTON */
+
+.analyze-action {
+    margin: 35px 0 20px;
+}
+
+
+/* ==================================================
+   V5 - SKILLS MOBILE
+================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .skills-page {
+        margin: 25px auto;
+
+        padding: 15px;
+    }
+
+    .skills-page > h1 {
+        font-size: 32px;
+    }
+
+    .skills-selection {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .skill-checkbox {
+        font-size: 16px;
+
+        padding: 13px 15px;
+    }
+
+    .resume-upload-box {
+        padding: 20px 15px;
+    }
+}
+/* ==================================================
+   V5 - ANALYSIS REPORT
+================================================== */
+
+.analysis-page {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+
+/* HEADER */
+
+.analysis-header {
+    margin-bottom: 25px;
+}
+
+.analysis-header h1 {
+    border: none;
+    padding: 10px;
+    margin: 10px auto;
+
+    font-size: 42px;
+    color: lightseagreen;
+}
+
+.analysis-header p {
+    color: #aaa;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.analysis-header h2 {
+    color: #ff4785;
+    margin-top: 5px;
+}
+
+
+/* ANALYSIS SECTIONS */
+
+.analysis-section {
+    margin: 55px auto;
+}
+
+.analysis-section > h2 {
+    margin-bottom: 25px;
+}
+
+
+/* RECOMMENDATION */
+
+.recommendation-box {
+    width: 750px;
+    max-width: 90%;
+
+    margin: 20px auto;
+    padding: 25px;
+
+    background: #1c1c1c;
+
+    border-left: 5px solid gold;
+    border-radius: 10px;
+}
+
+.recommendation-box p {
+    margin: 0;
+
+    color: #ddd;
+
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+
+/* EMPTY / SUCCESS MESSAGES */
+
+.empty-message {
+    color: #aaa;
+    font-size: 17px;
+}
+
+.success-message {
+    color: #00e676;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+
+/* ROADMAP DESCRIPTION */
+
+.roadmap-description {
+    color: #aaa;
+    font-size: 17px;
+}
+
+
+/* ROADMAP STEP */
+
+.roadmap-step {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    text-align: left;
+}
+
+.roadmap-number {
+    min-width: 38px;
+    height: 38px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #00c853;
+    color: white;
+
+    border-radius: 50%;
+
+    font-weight: bold;
+}
+
+
+/* ==================================================
+   V5 - ANALYSIS MOBILE
+================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .analysis-page {
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .analysis-header h1 {
+        font-size: 30px;
+    }
+
+    .analysis-section {
+        margin: 40px auto;
+    }
+
+    .recommendation-box {
+        width: 95%;
+        padding: 18px;
+    }
+
+    .recommendation-box p {
+        font-size: 16px;
+    }
+
+    .roadmap-step {
+        gap: 12px;
+    }
+
+    .roadmap-number {
+        min-width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+}
+/* ==================================================
+   V5 - DASHBOARD PAGE
+================================================== */
+
+.dashboard-page {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+
+/* DASHBOARD HEADER */
+
+.dashboard-header {
+    margin-bottom: 35px;
+}
+
+.dashboard-header h1 {
+    border: none;
+    padding: 10px;
+    margin: 10px auto;
+
+    font-size: 42px;
+    color: lightseagreen;
+}
+
+.dashboard-header p {
+    color: #aaa;
+    font-size: 18px;
+}
+
+
+/* REPORT SECTION */
+
+.dashboard-reports {
+    margin: 60px auto 30px;
+}
+
+.dashboard-reports h2 {
+    margin-bottom: 30px;
+}
+
+
+/* DASHBOARD TABLE */
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.dashboard-table th {
+    background: #2563eb;
+    color: white;
+
+    padding: 15px;
+}
+
+.dashboard-table td {
+    color: #222;
+    background: white;
+
+    padding: 15px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.dashboard-table tr:hover td {
+    background: #f3f4f6;
+}
+
+
+/* EMPTY DASHBOARD */
+
+.dashboard-empty {
+    width: 600px;
+    max-width: 90%;
+
+    margin: 30px auto;
+    padding: 35px;
+
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+    border-radius: 15px;
+}
+
+.dashboard-empty h3 {
+    color: lightseagreen;
+    font-size: 24px;
+}
+
+.dashboard-empty p {
+    color: #aaa;
+    font-size: 17px;
+}
+
+
+/* ==================================================
+   V5 - DASHBOARD MOBILE
+================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .dashboard-page {
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 30px;
+    }
+
+    .dashboard-header p {
+        font-size: 16px;
+    }
+
+    .dashboard-reports {
+        margin-top: 40px;
+    }
+
+    .dashboard-table {
+        min-width: 600px;
+    }
+
+    .dashboard-empty {
+        padding: 25px 15px;
+    }
+}
+/* ==================================================
+   V5 - HISTORY PAGE
+================================================== */
+
+.history-page {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+
+/* HISTORY HEADER */
+
+.history-header {
+    margin-bottom: 35px;
+}
+
+.history-header h1 {
+    border: none;
+    padding: 10px;
+    margin: 10px auto;
+
+    color: lightseagreen;
+    font-size: 42px;
+}
+
+.history-header p {
+    color: #aaa;
+    font-size: 18px;
+}
+
+
+/* SEARCH + EXPORT AREA */
+
+.history-actions {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin: 30px auto 40px;
+}
+
+.history-actions .search-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 0;
+}
+
+
+/* HISTORY TABLE WRAPPER */
+
+.history-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.35);
+}
+
+
+/* HISTORY TABLE */
+
+.history-table {
+    width: 100%;
+
+    min-width: 1000px;
+
+    border-collapse: collapse;
+
+    background: white;
+}
+
+.history-table th {
+    background: #2563eb;
+
+    color: white;
+
+    padding: 15px;
+
+    font-size: 15px;
+
+    white-space: nowrap;
+}
+
+.history-table td {
+    background: white;
+
+    color: #222;
+
+    padding: 14px;
+
+    border-bottom: 1px solid #ddd;
+
+    vertical-align: middle;
+}
+
+.history-table tbody tr:hover td {
+    background: #f3f4f6;
+}
+
+
+/* DREAM JOB COLUMN */
+
+.history-job {
+    font-weight: bold;
+
+    color: #222;
+}
+
+
+/* SCORE */
+
+.history-score {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    background: #e8f5e9;
+
+    color: #1b5e20;
+
+    border-radius: 15px;
+
+    font-weight: bold;
+}
+
+
+/* SKILLS */
+
+.history-skills {
+    max-width: 280px;
+
+    white-space: normal;
+
+    line-height: 1.5;
+
+    font-size: 14px;
+}
+
+
+/* EMPTY HISTORY */
+
+.history-empty {
+    width: 600px;
+
+    max-width: 90%;
+
+    margin: 40px auto;
+
+    padding: 35px;
+
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+
+    border-radius: 15px;
+}
+
+.history-empty h3 {
+    color: lightseagreen;
+
+    font-size: 25px;
+}
+
+.history-empty p {
+    color: #aaa;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+}
+
+
+/* ==================================================
+   V5 - HISTORY MOBILE
+================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .history-page {
+        margin: 20px auto;
+
+        padding: 10px;
+    }
+
+    .history-header h1 {
+        font-size: 30px;
+    }
+
+    .history-header p {
+        font-size: 16px;
+    }
+
+
+    /* SEARCH */
+
+    .history-actions {
+        flex-direction: column;
+    }
+
+    .history-actions .search-box {
+        width: 100%;
+
+        flex-direction: column;
+    }
+
+    .history-actions .search-box input {
+        width: 90%;
+    }
+
+
+    /* EXPORT BUTTONS */
+
+    .history-actions > a {
+        width: 90%;
+
+        max-width: 320px;
+    }
+
+
+    /* TABLE */
+
+    .history-table-wrapper {
+        width: 100%;
+    }
+
+    .history-table {
+        min-width: 1000px;
+    }
+
+
+    /* EMPTY */
+
+    .history-empty {
+        padding: 25px 15px;
+    }
+}
