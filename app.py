@@ -25,7 +25,8 @@ from resume_parser import extract_skills
 from analyzer import (
     get_required_skills,
     analyze,
-    calculate_weighted_score
+    calculate_weighted_score,
+    prioritize_missing_skills
 )
 
 from roadmap import ROADMAP
@@ -46,7 +47,7 @@ from models import (
 
 app = Flask(__name__)
 
-# Maximum resume upload size: 5 MB
+# Maximum resume upload size = 5 MB
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
 
 
@@ -65,7 +66,10 @@ UPLOAD_FOLDER = "uploads"
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(
+    UPLOAD_FOLDER,
+    exist_ok=True
+)
 
 
 # ==================================================
@@ -75,7 +79,9 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 @app.route("/")
 def home():
 
-    return render_template("index.html")
+    return render_template(
+        "index.html"
+    )
 
 
 # ==================================================
@@ -85,7 +91,9 @@ def home():
 @app.route("/user-type")
 def user_type():
 
-    return render_template("user_type.html")
+    return render_template(
+        "user_type.html"
+    )
 
 
 # ==================================================
@@ -95,17 +103,24 @@ def user_type():
 @app.route("/dream-job")
 def dream_job():
 
-    return render_template("dream_job.html")
+    return render_template(
+        "dream_job.html"
+    )
 
 
 # ==================================================
 # SKILLS
 # ==================================================
 
-@app.route("/skills", methods=["POST"])
+@app.route(
+    "/skills",
+    methods=["POST"]
+)
 def skills():
 
-    dream_job = request.form.get("dream_job")
+    dream_job = request.form.get(
+        "dream_job"
+    )
 
     if not dream_job:
 
@@ -134,11 +149,15 @@ def skills():
 @app.route("/history")
 def history():
 
-    keyword = request.args.get("search")
+    keyword = request.args.get(
+        "search"
+    )
 
     if keyword:
 
-        reports = search_reports(keyword)
+        reports = search_reports(
+            keyword
+        )
 
     else:
 
@@ -161,7 +180,9 @@ def history():
 )
 def delete_report_route(report_id):
 
-    delete_report(report_id)
+    delete_report(
+        report_id
+    )
 
     return redirect(
         url_for("history")
@@ -179,7 +200,9 @@ def export_csv():
 
     output = io.StringIO()
 
-    writer = csv.writer(output)
+    writer = csv.writer(
+        output
+    )
 
     writer.writerow([
         "ID",
@@ -201,15 +224,19 @@ def export_csv():
             report[5]
         ])
 
-    # UTF-8 BOM helps Excel display Unicode correctly
-    csv_data = "\ufeff" + output.getvalue()
+    csv_data = (
+        "\ufeff"
+        + output.getvalue()
+    )
 
     response = Response(
         csv_data,
         mimetype="text/csv; charset=utf-8"
     )
 
-    response.headers["Content-Disposition"] = (
+    response.headers[
+        "Content-Disposition"
+    ] = (
         "attachment; "
         "filename=JMS_Analysis_History.csv"
     )
@@ -230,7 +257,9 @@ def export_excel():
 
     sheet = workbook.active
 
-    sheet.title = "JMS Analysis History"
+    sheet.title = (
+        "JMS Analysis History"
+    )
 
     headings = [
         "ID",
@@ -241,9 +270,10 @@ def export_excel():
         "Missing Skills"
     ]
 
-    sheet.append(headings)
+    sheet.append(
+        headings
+    )
 
-    # Style headings
     for cell in sheet[1]:
 
         cell.font = Font(
@@ -254,7 +284,6 @@ def export_excel():
             horizontal="center"
         )
 
-    # Add reports
     for report in reports:
 
         sheet.append([
@@ -266,25 +295,44 @@ def export_excel():
             report[5]
         ])
 
-    # Column widths
-    sheet.column_dimensions["A"].width = 10
-    sheet.column_dimensions["B"].width = 30
-    sheet.column_dimensions["C"].width = 15
-    sheet.column_dimensions["D"].width = 20
-    sheet.column_dimensions["E"].width = 45
-    sheet.column_dimensions["F"].width = 55
+    sheet.column_dimensions[
+        "A"
+    ].width = 10
 
-    # Save Excel file into memory
+    sheet.column_dimensions[
+        "B"
+    ].width = 30
+
+    sheet.column_dimensions[
+        "C"
+    ].width = 15
+
+    sheet.column_dimensions[
+        "D"
+    ].width = 20
+
+    sheet.column_dimensions[
+        "E"
+    ].width = 45
+
+    sheet.column_dimensions[
+        "F"
+    ].width = 55
+
     output = io.BytesIO()
 
-    workbook.save(output)
+    workbook.save(
+        output
+    )
 
     output.seek(0)
 
     return send_file(
         output,
         as_attachment=True,
-        download_name="JMS_Analysis_History.xlsx",
+        download_name=(
+            "JMS_Analysis_History.xlsx"
+        ),
         mimetype=(
             "application/vnd.openxmlformats-"
             "officedocument.spreadsheetml.sheet"
@@ -296,7 +344,10 @@ def export_excel():
 # ANALYSIS
 # ==================================================
 
-@app.route("/analysis", methods=["POST"])
+@app.route(
+    "/analysis",
+    methods=["POST"]
+)
 def analysis():
 
     dream_job = request.form.get(
@@ -319,12 +370,18 @@ def analysis():
         </script>
         """
 
+
+    # ------------------------------------------------
+    # GET RESUME
+    # ------------------------------------------------
+
     resume = request.files.get(
         "resume"
     )
 
+
     # ------------------------------------------------
-    # RESUME UPLOAD
+    # RESUME ANALYSIS
     # ------------------------------------------------
 
     if resume and resume.filename != "":
@@ -333,10 +390,6 @@ def analysis():
             ".pdf",
             ".docx"
         )
-
-        # --------------------------------------------
-        # FILE TYPE VALIDATION
-        # --------------------------------------------
 
         if not resume.filename.lower().endswith(
             allowed_extensions
@@ -353,9 +406,6 @@ def analysis():
             </script>
             """
 
-        # --------------------------------------------
-        # SECURE FILE NAME
-        # --------------------------------------------
 
         filename = secure_filename(
             resume.filename
@@ -374,20 +424,17 @@ def analysis():
             </script>
             """
 
+
         file_path = os.path.join(
             app.config["UPLOAD_FOLDER"],
             filename
         )
 
-        # --------------------------------------------
-        # SAVE RESUME
-        # --------------------------------------------
 
-        resume.save(file_path)
+        resume.save(
+            file_path
+        )
 
-        # --------------------------------------------
-        # EXTRACT RESUME SKILLS
-        # --------------------------------------------
 
         try:
 
@@ -408,19 +455,22 @@ def analysis():
             </script>
             """
 
+
     # ------------------------------------------------
-    # MANUAL SKILL SELECTION
+    # MANUAL SKILL ANALYSIS
     # ------------------------------------------------
 
     else:
 
-        selected_skills = request.form.getlist(
-            "skills"
+        selected_skills = (
+            request.form.getlist(
+                "skills"
+            )
         )
 
 
     # ------------------------------------------------
-    # EMPTY SKILLS VALIDATION
+    # SKILL VALIDATION
     # ------------------------------------------------
 
     if not selected_skills:
@@ -446,6 +496,7 @@ def analysis():
         dream_job
     )
 
+
     if not required_skills:
 
         return """
@@ -460,7 +511,7 @@ def analysis():
 
 
     # ------------------------------------------------
-    # ANALYZE SKILLS
+    # ANALYZE FOUND / MISSING SKILLS
     # ------------------------------------------------
 
     found_skills, missing_skills = analyze(
@@ -476,6 +527,15 @@ def analysis():
     percentage = calculate_weighted_score(
         found_skills,
         required_skills
+    )
+
+
+    # ------------------------------------------------
+    # V6 MARKET PRIORITY
+    # ------------------------------------------------
+
+    market_skills = prioritize_missing_skills(
+        missing_skills
     )
 
 
@@ -583,18 +643,27 @@ def analysis():
         status = "🔴 Beginner"
 
 
-    # ------------------------------------------------
-    # SMART PERSONALIZED ROADMAP - V5
-    # ------------------------------------------------
+    # ==================================================
+    # V6 INTELLIGENT MARKET-PRIORITIZED ROADMAP
+    # ==================================================
 
     roadmap = []
 
     week = 1
 
-    for skill in missing_skills:
 
-        # Use predefined roadmap if available.
-        # Otherwise automatically create a learning step.
+    # market_skills is already sorted
+    # from highest priority to lowest priority
+
+    for item in market_skills:
+
+        skill = item["skill"]
+
+        demand = item["demand"]
+
+        priority = item["priority"]
+
+
         learning_step = ROADMAP.get(
             skill,
             (
@@ -603,27 +672,37 @@ def analysis():
             )
         )
 
+
         roadmap.append(
-            f"Week {week}: {learning_step}"
+            f"Week {week}: "
+            f"{learning_step} "
+            f"| Market Demand: {demand} "
+            f"| Priority: {priority}/5"
         )
+
 
         week += 1
 
 
-    # If the user still has missing skills
-    if missing_skills:
+    # ------------------------------------------------
+    # FINAL PROJECT STEP
+    # ------------------------------------------------
+
+    if market_skills:
 
         roadmap.append(
             f"Week {week}: "
-            "Build a Mini Project using the skills you learned"
+            "Build a Mini Project using "
+            "the highest-priority skills "
+            "you learned"
         )
 
-    # If the user already has all required skills
     else:
 
         roadmap.append(
             "Week 1: "
-            "Build an Advanced Project and strengthen your portfolio"
+            "Build an Advanced Project and "
+            "strengthen your portfolio"
         )
 
 
@@ -641,7 +720,7 @@ def analysis():
 
 
     # ------------------------------------------------
-    # SAVE LAST REPORT FOR PDF
+    # SAVE LAST REPORT
     # ------------------------------------------------
 
     app.config["LAST_REPORT"] = {
@@ -674,6 +753,7 @@ def analysis():
     # ------------------------------------------------
 
     return render_template(
+
         "analysis.html",
 
         dream_job=dream_job,
@@ -683,6 +763,8 @@ def analysis():
         found_skills=found_skills,
 
         missing_skills=missing_skills,
+
+        market_skills=market_skills,
 
         percentage=percentage,
 
@@ -715,13 +797,15 @@ def dashboard():
         reports
     )
 
+
     if total_reports > 0:
 
         average_score = int(
             sum(
                 report[2]
                 for report in reports
-            ) / total_reports
+            )
+            / total_reports
         )
 
         highest_score = max(
@@ -742,6 +826,7 @@ def dashboard():
 
 
     return render_template(
+
         "dashboard.html",
 
         reports=reports,
@@ -759,7 +844,7 @@ def dashboard():
 
 
 # ==================================================
-# DOWNLOAD PDF REPORT
+# DOWNLOAD PDF
 # ==================================================
 
 @app.route("/download-report")
@@ -768,6 +853,7 @@ def download_report():
     report = app.config.get(
         "LAST_REPORT"
     )
+
 
     if not report:
 
@@ -778,24 +864,36 @@ def download_report():
                 + "Please analyze your "
                 + "skills first."
             );
+
             window.location.href = "/";
         </script>
         """
+
 
     filename = (
         "JMS_Analysis_Report.pdf"
     )
 
+
     generate_pdf(
+
         filename,
+
         report["dream_job"],
+
         report["percentage"],
+
         report["status"],
+
         report["found_skills"],
+
         report["missing_skills"],
+
         report["recommendation"],
+
         report["roadmap"]
     )
+
 
     return send_file(
         filename,
@@ -809,4 +907,6 @@ def download_report():
 
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    app.run(
+        debug=True
+    )

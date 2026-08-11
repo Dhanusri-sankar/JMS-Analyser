@@ -1888,3 +1888,194 @@ tr:hover td {
         padding: 25px 15px;
     }
 }
+/* ==================================================
+   V6 - MARKET SKILL DEMAND
+================================================== */
+
+.market-description {
+    color: #cccccc;
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+
+/* MARKET SKILLS CONTAINER */
+
+.market-skills-container {
+    width: 85%;
+    max-width: 900px;
+
+    margin: 25px auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+
+/* MARKET SKILL CARD */
+
+.market-skill-card {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    background: #1f1f1f;
+
+    border: 1px solid #333;
+
+    border-left: 6px solid #ff9800;
+
+    border-radius: 12px;
+
+    padding: 18px 22px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.3);
+
+    transition: 0.3s;
+}
+
+
+.market-skill-card:hover {
+    transform: translateY(-4px);
+
+    border-left-color: #00e676;
+}
+
+
+/* SKILL INFORMATION */
+
+.market-skill-info {
+    text-align: left;
+}
+
+
+.market-skill-info h3 {
+    color: white;
+
+    font-size: 22px;
+
+    margin: 0 0 8px;
+}
+
+
+.market-skill-info p {
+    color: #bbbbbb;
+
+    font-size: 16px;
+
+    margin: 0;
+}
+
+
+.market-skill-info strong {
+    color: #ff9800;
+}
+
+
+/* PRIORITY */
+
+.market-priority {
+    text-align: center;
+
+    min-width: 100px;
+}
+
+
+.market-priority span {
+    display: block;
+
+    color: #aaaaaa;
+
+    font-size: 14px;
+
+    margin-bottom: 5px;
+}
+
+
+.market-priority strong {
+    color: #00e676;
+
+    font-size: 22px;
+}
+
+
+/* EMPTY MARKET SECTION */
+
+.market-empty {
+    width: 600px;
+
+    max-width: 90%;
+
+    margin: 25px auto;
+
+    padding: 30px;
+
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+
+    border-radius: 15px;
+}
+
+
+.market-empty h3 {
+    color: #00e676;
+
+    font-size: 24px;
+}
+
+
+.market-empty p {
+    color: #aaaaaa;
+
+    font-size: 17px;
+}
+
+
+/* ==================================================
+   V6 - MARKET MOBILE
+================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .market-skills-container {
+        width: 95%;
+    }
+
+
+    .market-skill-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+
+        padding: 18px;
+    }
+
+
+    .market-skill-info {
+        text-align: left;
+
+        width: 100%;
+    }
+
+
+    .market-skill-info h3 {
+        font-size: 20px;
+    }
+
+
+    .market-priority {
+        text-align: left;
+    }
+
+
+    .market-empty {
+        padding: 25px 15px;
+    }
+}

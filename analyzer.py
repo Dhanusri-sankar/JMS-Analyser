@@ -3,23 +3,49 @@ import os
 
 
 # ==================================================
-# LOAD JOBS
+# FILE PATHS
+# ==================================================
+
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
+
+JOBS_FILE = os.path.join(
+    BASE_DIR,
+    "data",
+    "jobs.json"
+)
+
+MARKET_FILE = os.path.join(
+    BASE_DIR,
+    "data",
+    "skill_market.json"
+)
+
+
+# ==================================================
+# LOAD JOB DATA
 # ==================================================
 
 def load_jobs():
 
-    base_dir = os.path.dirname(
-        os.path.abspath(__file__)
-    )
+    with open(
+        JOBS_FILE,
+        "r",
+        encoding="utf-8"
+    ) as file:
 
-    jobs_file = os.path.join(
-        base_dir,
-        "data",
-        "jobs.json"
-    )
+        return json.load(file)
+
+
+# ==================================================
+# LOAD MARKET DATA
+# ==================================================
+
+def load_market_data():
 
     with open(
-        jobs_file,
+        MARKET_FILE,
         "r",
         encoding="utf-8"
     ) as file:
@@ -100,17 +126,17 @@ def calculate_weighted_score(
         required_skills
     ):
 
-        # First 3 skills = Core Skills
+        # First 3 skills = Core
         if index < 3:
 
             weight = 3
 
-        # Next 3 skills = Important Skills
+        # Next 3 = Important
         elif index < 6:
 
             weight = 2
 
-        # Remaining skills = Supporting Skills
+        # Remaining = Supporting
         else:
 
             weight = 1
@@ -121,11 +147,115 @@ def calculate_weighted_score(
 
             earned_weight += weight
 
-    percentage = round(
+    if total_weight == 0:
+
+        return 0
+
+    return round(
         (
             earned_weight
             / total_weight
         ) * 100
     )
 
-    return percentage
+
+# ==================================================
+# V6 GET SKILL MARKET INFORMATION
+# ==================================================
+
+def get_skill_market_info(skill):
+
+    market_data = load_market_data()
+
+    if skill in market_data:
+
+        return market_data[skill]
+
+    # Safe fallback if a skill has not yet
+    # been added to skill_market.json
+    return {
+        "demand": "Unknown",
+        "priority": 0
+    }
+
+
+# ==================================================
+# V6 GET MARKET INFORMATION FOR JOB SKILLS
+# ==================================================
+
+def get_job_market_skills(job_name):
+
+    required_skills = get_required_skills(
+        job_name
+    )
+
+    market_data = load_market_data()
+
+    result = []
+
+    for skill in required_skills:
+
+        information = market_data.get(
+            skill,
+            {
+                "demand": "Unknown",
+                "priority": 0
+            }
+        )
+
+        result.append({
+            "skill": skill,
+            "demand": information.get(
+                "demand",
+                "Unknown"
+            ),
+            "priority": information.get(
+                "priority",
+                0
+            )
+        })
+
+    return result
+
+
+# ==================================================
+# V6 PRIORITIZE MISSING SKILLS
+# ==================================================
+
+def prioritize_missing_skills(
+    missing_skills
+):
+
+    market_data = load_market_data()
+
+    prioritized = []
+
+    for skill in missing_skills:
+
+        information = market_data.get(
+            skill,
+            {
+                "demand": "Unknown",
+                "priority": 0
+            }
+        )
+
+        prioritized.append({
+            "skill": skill,
+            "demand": information.get(
+                "demand",
+                "Unknown"
+            ),
+            "priority": information.get(
+                "priority",
+                0
+            )
+        })
+
+    # Highest priority first
+    prioritized.sort(
+        key=lambda item: item["priority"],
+        reverse=True
+    )
+
+    return prioritized

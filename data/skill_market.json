@@ -1,0 +1,270 @@
+{
+    "Python": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "SQL": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Excel": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Pandas": {
+        "demand": "High",
+        "priority": 4
+    },
+    "NumPy": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Java": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Spring Boot": {
+        "demand": "High",
+        "priority": 4
+    },
+    "C++": {
+        "demand": "High",
+        "priority": 4
+    },
+    "HTML": {
+        "demand": "High",
+        "priority": 3
+    },
+    "CSS": {
+        "demand": "High",
+        "priority": 3
+    },
+    "JavaScript": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "React": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Node.js": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Express.js": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Flask": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Django": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Git": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "OOP": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "REST API": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Data Structures": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Algorithms": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Machine Learning": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Deep Learning": {
+        "demand": "High",
+        "priority": 4
+    },
+    "TensorFlow": {
+        "demand": "High",
+        "priority": 4
+    },
+    "PyTorch": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Natural Language Processing": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Transformers": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Scikit-learn": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Statistics": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Data Visualization": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Apache Spark": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Hadoop": {
+        "demand": "Medium",
+        "priority": 3
+    },
+    "Airflow": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Power BI": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Tableau": {
+        "demand": "High",
+        "priority": 4
+    },
+    "ETL": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Data Warehousing": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Data Modeling": {
+        "demand": "High",
+        "priority": 4
+    },
+    "AWS": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Azure": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Cloud Computing": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Linux": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Docker": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Kubernetes": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Jenkins": {
+        "demand": "High",
+        "priority": 4
+    },
+    "CI/CD": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Terraform": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Networking": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Cybersecurity": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "Network Security": {
+        "demand": "High",
+        "priority": 4
+    },
+    "SIEM": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Penetration Testing": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Web Security": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Kali Linux": {
+        "demand": "Medium",
+        "priority": 3
+    },
+    "Android Studio": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Kotlin": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Swift": {
+        "demand": "High",
+        "priority": 4
+    },
+    "SwiftUI": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Manual Testing": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Selenium": {
+        "demand": "Very High",
+        "priority": 5
+    },
+    "API Testing": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Postman": {
+        "demand": "High",
+        "priority": 4
+    },
+    "JIRA": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Agile": {
+        "demand": "High",
+        "priority": 4
+    },
+    "MongoDB": {
+        "demand": "High",
+        "priority": 4
+    },
+    "Firebase": {
+        "demand": "High",
+        "priority": 4
+    },
+    "SQLite": {
+        "demand": "Medium",
+        "priority": 3
+    }
+}
