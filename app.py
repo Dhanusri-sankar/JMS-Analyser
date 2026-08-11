@@ -31,6 +31,9 @@ from analyzer import (
 
 from roadmap import ROADMAP
 
+# V7 - LIVE ADZUNA MARKET INSIGHTS
+from market_api import get_market_insights
+
 from models import (
     create_tables,
     save_report,
@@ -539,6 +542,34 @@ def analysis():
     )
 
 
+    # ==================================================
+    # V7 LIVE ADZUNA MARKET INSIGHTS
+    # ==================================================
+
+    try:
+
+        market_insights = get_market_insights(
+            dream_job,
+            country="in"
+        )
+
+    except Exception as error:
+
+        market_insights = {
+            "success": False,
+            "message": (
+                "Live market information "
+                "is temporarily unavailable."
+            ),
+            "total_jobs": 0,
+            "top_companies": [],
+            "top_locations": [],
+            "salary_min": None,
+            "salary_max": None,
+            "market_level": "Unavailable"
+        }
+
+
     # ------------------------------------------------
     # SKILL COUNTS
     # ------------------------------------------------
@@ -652,7 +683,7 @@ def analysis():
     week = 1
 
 
-    # market_skills is already sorted
+    # Market skills are already sorted
     # from highest priority to lowest priority
 
     for item in market_skills:
@@ -765,6 +796,9 @@ def analysis():
         missing_skills=missing_skills,
 
         market_skills=market_skills,
+
+        # V7 MARKET INSIGHTS
+        market_insights=market_insights,
 
         percentage=percentage,
 

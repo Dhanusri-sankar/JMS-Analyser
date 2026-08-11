@@ -239,6 +239,244 @@ Analysis Report - JMS Analyzer
 
 
 <!-- =========================================
+     V7 LIVE JOB MARKET INSIGHTS
+========================================== -->
+
+<section class="analysis-section">
+
+    <h2>🌐 Live Job Market Insights</h2>
+
+    <p class="market-description">
+
+        Current job-market information for
+        <strong>{{ dream_job }}</strong>
+        based on live Adzuna job listings.
+
+    </p>
+
+
+    {% if market_insights and market_insights.success %}
+
+
+        <!-- =====================================
+             MARKET SUMMARY
+        ====================================== -->
+
+        <div class="summary-container market-summary">
+
+            <div class="card">
+
+                <h3>💼 Jobs Found</h3>
+
+                <h1>
+                    {{ market_insights.total_jobs }}
+                </h1>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🔥 Market Demand</h3>
+
+                <h1>
+                    {{ market_insights.market_level }}
+                </h1>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             TOP COMPANIES
+        ====================================== -->
+
+        <div class="market-insights-grid">
+
+
+            <div class="market-insight-box">
+
+                <h3>🏢 Top Hiring Companies</h3>
+
+
+                {% if market_insights.top_companies %}
+
+                    <div class="market-list">
+
+                        {% for company in market_insights.top_companies %}
+
+                            <div class="market-list-item">
+
+                                <span>
+                                    {{ loop.index }}.
+                                    {{ company.name }}
+                                </span>
+
+                                <strong>
+                                    {{ company.count }}
+                                </strong>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <p class="empty-message">
+                        Company information is not available.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =================================
+                 TOP LOCATIONS
+            ================================== -->
+
+            <div class="market-insight-box">
+
+                <h3>📍 Top Job Locations</h3>
+
+
+                {% if market_insights.top_locations %}
+
+                    <div class="market-list">
+
+                        {% for location in market_insights.top_locations %}
+
+                            <div class="market-list-item">
+
+                                <span>
+                                    {{ loop.index }}.
+                                    {{ location.name }}
+                                </span>
+
+                                <strong>
+                                    {{ location.count }}
+                                </strong>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <p class="empty-message">
+                        Location information is not available.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             SALARY INFORMATION
+        ====================================== -->
+
+        <div class="market-salary-box">
+
+            <h3>💰 Salary Information</h3>
+
+
+            {% if market_insights.salary_min
+                  or market_insights.salary_max %}
+
+
+                {% if market_insights.salary_min %}
+
+                    <p>
+                        Average Minimum Salary:
+                        <strong>
+                            ₹{{ market_insights.salary_min }}
+                        </strong>
+                    </p>
+
+                {% endif %}
+
+
+                {% if market_insights.salary_max %}
+
+                    <p>
+                        Average Maximum Salary:
+                        <strong>
+                            ₹{{ market_insights.salary_max }}
+                        </strong>
+                    </p>
+
+                {% endif %}
+
+
+            {% else %}
+
+                <p class="empty-message">
+
+                    Salary information is not available
+                    for the current job listings.
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =====================================
+             MARKET INFORMATION NOTE
+        ====================================== -->
+
+        <div class="market-source-note">
+
+            <p>
+                📊 Market insights are generated from
+                currently available job listings and
+                may change over time.
+            </p>
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- =====================================
+             MARKET DATA UNAVAILABLE
+        ====================================== -->
+
+        <div class="market-empty">
+
+            <h3>
+                ⚠️ Live Market Data Unavailable
+            </h3>
+
+            <p>
+
+                We couldn't retrieve current market
+                information right now.
+
+                Your skill analysis and learning
+                roadmap are still available.
+
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+</section>
+
+
+<!-- =========================================
      SKILL DISTRIBUTION CHART
 ========================================== -->
 
@@ -351,5 +589,6 @@ Analysis Report - JMS Analyzer
     </a>
 
 </div>
+
 
 {% endblock %}

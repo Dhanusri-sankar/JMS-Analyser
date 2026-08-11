@@ -2079,3 +2079,288 @@ tr:hover td {
         padding: 25px 15px;
     }
 }
+/* ==================================================
+   V7 - LIVE JOB MARKET INSIGHTS
+================================================== */
+
+/* MARKET SUMMARY */
+
+.market-summary {
+    width: 85%;
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+.market-summary .card {
+    width: 260px;
+    border-top: 6px solid #00bfa5;
+}
+
+.market-summary .card h3 {
+    color: #cccccc;
+    font-size: 19px;
+}
+
+.market-summary .card h1 {
+    color: #00e676;
+    font-size: 32px;
+}
+
+
+/* MARKET INSIGHTS GRID */
+
+.market-insights-grid {
+    width: 85%;
+    max-width: 900px;
+
+    margin: 30px auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+}
+
+
+/* INDIVIDUAL INSIGHT BOX */
+
+.market-insight-box {
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+
+    border-radius: 15px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.35);
+
+    transition: 0.3s;
+}
+
+.market-insight-box:hover {
+    transform: translateY(-5px);
+
+    border-color: lightseagreen;
+
+    box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.45);
+}
+
+
+/* INSIGHT BOX HEADING */
+
+.market-insight-box h3 {
+    color: gold;
+
+    font-size: 23px;
+
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+
+/* MARKET LIST */
+
+.market-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* MARKET LIST ITEM */
+
+.market-list-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #252525;
+
+    border-radius: 8px;
+
+    padding: 12px 15px;
+
+    color: white;
+
+    font-size: 16px;
+
+    transition: 0.3s;
+}
+
+.market-list-item:hover {
+    background: #303030;
+
+    transform: translateX(4px);
+}
+
+.market-list-item span {
+    text-align: left;
+
+    color: #eeeeee;
+}
+
+.market-list-item strong {
+    color: #00e676;
+
+    margin-left: 15px;
+}
+
+
+/* SALARY INFORMATION */
+
+.market-salary-box {
+    width: 85%;
+    max-width: 900px;
+
+    margin: 30px auto;
+
+    padding: 25px;
+
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.market-salary-box h3 {
+    color: gold;
+
+    font-size: 24px;
+
+    margin-top: 0;
+}
+
+.market-salary-box p {
+    color: #cccccc;
+
+    font-size: 18px;
+
+    margin: 10px 0;
+}
+
+.market-salary-box strong {
+    color: #00e676;
+}
+
+
+/* MARKET SOURCE NOTE */
+
+.market-source-note {
+    width: 85%;
+    max-width: 900px;
+
+    margin: 25px auto;
+
+    padding: 15px 20px;
+
+    background: #181818;
+
+    border-left: 4px solid lightseagreen;
+
+    border-radius: 8px;
+}
+
+.market-source-note p {
+    color: #999999;
+
+    font-size: 15px;
+
+    margin: 0;
+}
+
+
+/* ==================================================
+   V7 - MARKET INSIGHTS TABLET
+================================================== */
+
+@media screen and (max-width: 900px) {
+
+    .market-insights-grid {
+        width: 90%;
+
+        grid-template-columns: 1fr;
+    }
+
+    .market-summary {
+        width: 90%;
+    }
+
+    .market-salary-box,
+    .market-source-note {
+        width: 90%;
+    }
+}
+
+
+/* ==================================================
+   V7 - MARKET INSIGHTS MOBILE
+================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .market-summary {
+        width: 95%;
+    }
+
+    .market-summary .card {
+        width: 90%;
+        max-width: 320px;
+    }
+
+    .market-insights-grid {
+        width: 95%;
+
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+    .market-insight-box {
+        padding: 20px 15px;
+    }
+
+    .market-insight-box h3 {
+        font-size: 21px;
+    }
+
+    .market-list-item {
+        font-size: 15px;
+
+        padding: 11px 12px;
+    }
+
+    .market-salary-box {
+        width: 95%;
+
+        padding: 20px 15px;
+    }
+
+    .market-salary-box h3 {
+        font-size: 21px;
+    }
+
+    .market-salary-box p {
+        font-size: 16px;
+    }
+
+    .market-source-note {
+        width: 95%;
+
+        padding: 12px 15px;
+    }
+
+    .market-source-note p {
+        font-size: 14px;
+    }
+}
