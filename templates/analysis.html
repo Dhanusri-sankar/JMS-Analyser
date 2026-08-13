@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
+
 {% block title %}
 Analysis Report - JMS Analyzer
 {% endblock %}
 
+
 {% block content %}
+
 
 <!-- =========================================
      PAGE HEADER
@@ -99,6 +102,235 @@ Analysis Report - JMS Analyzer
 
 
 <!-- =========================================
+     V7.5 RESUME SKILL MATCHING
+========================================== -->
+
+{% if resume_uploaded %}
+
+<section class="analysis-section">
+
+    <h2>📄 Resume Skill Matching</h2>
+
+    <p class="market-description">
+
+        Your uploaded resume has been compared
+        with the skill requirements for
+
+        <strong>{{ dream_job }}</strong>.
+
+    </p>
+
+
+    <!-- =====================================
+         RESUME MATCH SCORE
+    ====================================== -->
+
+    <div class="resume-match-score-card">
+
+        <div class="resume-score-content">
+
+            <span class="resume-score-label">
+                Resume Match Score
+            </span>
+
+            <strong class="resume-score-value">
+                {{ resume_match_score }}%
+            </strong>
+
+            <span class="resume-score-subtitle">
+                Match with required job skills
+            </span>
+
+        </div>
+
+
+        <div class="resume-score-progress">
+
+            <div class="resume-score-progress-track">
+
+                <div
+                    class="resume-score-progress-bar"
+                    style="width: {{ resume_match_score }}%;"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         MATCHED SKILLS
+    ====================================== -->
+
+    <div class="resume-skill-card resume-matched-card">
+
+        <div class="resume-skill-header">
+
+            <h3>
+                ✓ Matched Skills
+            </h3>
+
+            <span>
+                {{ matched_resume_skills|length }}
+            </span>
+
+        </div>
+
+
+        {% if matched_resume_skills %}
+
+            <div class="resume-skill-tags">
+
+                {% for skill in matched_resume_skills %}
+
+                    <span class="resume-matched-tag">
+                        ✓ {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="empty-message">
+                No required skills were matched
+                from the resume.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================
+         MISSING JOB SKILLS
+    ====================================== -->
+
+    <div class="resume-skill-card resume-missing-card">
+
+        <div class="resume-skill-header">
+
+            <h3>
+                ✗ Missing Job Skills
+            </h3>
+
+            <span>
+                {{ missing_resume_skills|length }}
+            </span>
+
+        </div>
+
+
+        {% if missing_resume_skills %}
+
+            <div class="resume-skill-tags">
+
+                {% for skill in missing_resume_skills %}
+
+                    <span class="resume-missing-tag">
+                        ✗ {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="resume-success-message">
+
+                🎉 Your resume contains all
+                required job skills!
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================
+         ADDITIONAL RESUME SKILLS
+    ====================================== -->
+
+    <div class="resume-skill-card resume-additional-card">
+
+        <div class="resume-skill-header">
+
+            <h3>
+                ➕ Additional Resume Skills
+            </h3>
+
+            <span>
+                {{ additional_resume_skills|length }}
+            </span>
+
+        </div>
+
+
+        <p class="resume-additional-description">
+
+            These skills were detected in your
+            resume but are not currently listed
+            as required skills for this job.
+
+        </p>
+
+
+        {% if additional_resume_skills %}
+
+            <div class="resume-skill-tags">
+
+                {% for skill in additional_resume_skills %}
+
+                    <span class="resume-additional-tag">
+                        + {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="empty-message">
+                No additional skills detected.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================
+         RESUME PRIVACY NOTE
+    ====================================== -->
+
+    <div class="resume-privacy-note">
+
+        <strong>
+            🔐 Resume Privacy
+        </strong>
+
+        <p>
+            JMS Analyzer uses your uploaded resume
+            to identify relevant skills for this
+            analysis. Personal information is not
+            displayed in the skill-matching report.
+        </p>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- =========================================
      FOUND SKILLS
 ========================================== -->
 
@@ -146,7 +378,7 @@ Analysis Report - JMS Analyzer
             {% for skill in missing_skills %}
 
                 <span class="missing-tag">
-                    {{ skill }}
+                    ✗ {{ skill }}
                 </span>
 
             {% endfor %}
@@ -165,6 +397,278 @@ Analysis Report - JMS Analyzer
 
 
 <!-- =========================================
+     V7.3 SKILL GAP VISUALIZATION
+========================================== -->
+
+<section class="analysis-section">
+
+    <h2>📊 Skill Gap Visualization</h2>
+
+    <p class="market-description">
+
+        A visual summary of the skills you already
+        have and the skills you still need to learn
+        for <strong>{{ dream_job }}</strong>.
+
+    </p>
+
+
+    <!-- CURRENT SKILLS -->
+
+    <div class="skill-gap-card">
+
+        <div class="skill-gap-header">
+
+            <h3>
+                ✓ Your Current Skills
+            </h3>
+
+            <span class="skill-gap-count">
+                {{ found_count }} Skills
+            </span>
+
+        </div>
+
+
+        {% if found_skills %}
+
+            <div class="skill-gap-list">
+
+                {% for skill in found_skills %}
+
+                    <div class="skill-gap-item found-gap-item">
+
+                        <div class="skill-gap-name">
+
+                            <span class="skill-status-icon">
+                                ✓
+                            </span>
+
+                            <span>
+                                {{ skill }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="skill-gap-bar-container">
+
+                            <div
+                                class="skill-gap-bar skill-found-bar"
+                                style="width: 100%;"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <span class="skill-gap-status found-status">
+                            Have
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="skill-gap-empty">
+
+                <p>
+                    No matching skills were detected.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- MISSING SKILLS -->
+
+    <div class="skill-gap-card">
+
+        <div class="skill-gap-header">
+
+            <h3>
+                ✗ Skills You Need
+            </h3>
+
+            <span class="skill-gap-count">
+                {{ missing_count }} Skills
+            </span>
+
+        </div>
+
+
+        {% if missing_skills %}
+
+            <div class="skill-gap-list">
+
+                {% for skill in missing_skills %}
+
+                    {% set market_item = namespace(
+                        demand="Not Available",
+                        priority=0
+                    ) %}
+
+
+                    {% for item in market_skills %}
+
+                        {% if item.skill == skill %}
+
+                            {% set market_item.demand = item.demand %}
+                            {% set market_item.priority = item.priority %}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+
+                    <div class="skill-gap-item missing-gap-item">
+
+                        <div class="skill-gap-name">
+
+                            <span class="skill-status-icon">
+                                ✗
+                            </span>
+
+                            <span>
+                                {{ skill }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="skill-gap-bar-container">
+
+                            <div
+                                class="skill-gap-bar skill-missing-bar"
+                                style="width: {{ (market_item.priority / 5 * 100) if market_item.priority else 20 }}%;"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <div class="skill-gap-details">
+
+                            <span class="skill-demand">
+                                {{ market_item.demand }}
+                            </span>
+
+
+                            {% if market_item.priority %}
+
+                                <span class="skill-priority">
+                                    {{ market_item.priority }}/5
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="skill-gap-success">
+
+                <h3>
+                    🎉 No Skill Gap!
+                </h3>
+
+                <p>
+                    You already have all the required
+                    skills for this role.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- SKILL GAP SUMMARY -->
+
+    <div class="skill-gap-summary">
+
+        <div class="skill-gap-summary-item">
+
+            <span class="summary-icon">
+                ✓
+            </span>
+
+            <div>
+
+                <strong>
+                    {{ found_count }}
+                </strong>
+
+                <span>
+                    Skills Found
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="skill-gap-summary-item">
+
+            <span class="summary-icon missing-summary-icon">
+                ✗
+            </span>
+
+            <div>
+
+                <strong>
+                    {{ missing_count }}
+                </strong>
+
+                <span>
+                    Skills Missing
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="skill-gap-summary-item">
+
+            <span class="summary-icon">
+                📈
+            </span>
+
+            <div>
+
+                <strong>
+                    {{ percentage }}%
+                </strong>
+
+                <span>
+                    Current Readiness
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
      V6 MARKET SKILL DEMAND
 ========================================== -->
 
@@ -173,65 +677,70 @@ Analysis Report - JMS Analyzer
     <h2>📈 Market Skill Demand</h2>
 
     <p class="market-description">
+
         These missing skills are prioritized based
         on their current market-demand level.
+
     </p>
 
 
     {% if market_skills %}
 
-    <div class="market-skills-container">
+        <div class="market-skills-container">
 
-        {% for item in market_skills %}
+            {% for item in market_skills %}
 
-        <div class="market-skill-card">
+                <div class="market-skill-card">
 
-            <div class="market-skill-info">
+                    <div class="market-skill-info">
 
-                <h3>
-                    {{ item.skill }}
-                </h3>
+                        <h3>
+                            {{ item.skill }}
+                        </h3>
 
-                <p>
-                    Market Demand:
-                    <strong>
-                        {{ item.demand }}
-                    </strong>
-                </p>
+                        <p>
+                            Market Demand:
 
-            </div>
+                            <strong>
+                                {{ item.demand }}
+                            </strong>
+                        </p>
+
+                    </div>
 
 
-            <div class="market-priority">
+                    <div class="market-priority">
 
-                <span>
-                    Priority
-                </span>
+                        <span>
+                            Priority
+                        </span>
 
-                <strong>
-                    {{ item.priority }}/5
-                </strong>
+                        <strong>
+                            {{ item.priority }}/5
+                        </strong>
 
-            </div>
+                    </div>
+
+                </div>
+
+            {% endfor %}
 
         </div>
 
-        {% endfor %}
-
-    </div>
-
     {% else %}
 
-    <div class="market-empty">
+        <div class="market-empty">
 
-        <h3>🎉 No Missing Skills</h3>
+            <h3>
+                🎉 No Missing Skills
+            </h3>
 
-        <p>
-            You already have all the required
-            skills for this job.
-        </p>
+            <p>
+                You already have all the required
+                skills for this job.
+            </p>
 
-    </div>
+        </div>
 
     {% endif %}
 
@@ -249,7 +758,11 @@ Analysis Report - JMS Analyzer
     <p class="market-description">
 
         Current job-market information for
-        <strong>{{ dream_job }}</strong>
+
+        <strong>
+            {{ dream_job }}
+        </strong>
+
         based on live Adzuna job listings.
 
     </p>
@@ -257,16 +770,13 @@ Analysis Report - JMS Analyzer
 
     {% if market_insights and market_insights.success %}
 
-
-        <!-- =====================================
-             MARKET SUMMARY
-        ====================================== -->
-
         <div class="summary-container market-summary">
 
             <div class="card">
 
-                <h3>💼 Jobs Found</h3>
+                <h3>
+                    💼 Jobs Found
+                </h3>
 
                 <h1>
                     {{ market_insights.total_jobs }}
@@ -277,7 +787,9 @@ Analysis Report - JMS Analyzer
 
             <div class="card">
 
-                <h3>🔥 Market Demand</h3>
+                <h3>
+                    🔥 Market Demand
+                </h3>
 
                 <h1>
                     {{ market_insights.market_level }}
@@ -288,16 +800,13 @@ Analysis Report - JMS Analyzer
         </div>
 
 
-        <!-- =====================================
-             TOP COMPANIES
-        ====================================== -->
-
         <div class="market-insights-grid">
-
 
             <div class="market-insight-box">
 
-                <h3>🏢 Top Hiring Companies</h3>
+                <h3>
+                    🏢 Top Hiring Companies
+                </h3>
 
 
                 {% if market_insights.top_companies %}
@@ -334,13 +843,11 @@ Analysis Report - JMS Analyzer
             </div>
 
 
-            <!-- =================================
-                 TOP LOCATIONS
-            ================================== -->
-
             <div class="market-insight-box">
 
-                <h3>📍 Top Job Locations</h3>
+                <h3>
+                    📍 Top Job Locations
+                </h3>
 
 
                 {% if market_insights.top_locations %}
@@ -379,13 +886,11 @@ Analysis Report - JMS Analyzer
         </div>
 
 
-        <!-- =====================================
-             SALARY INFORMATION
-        ====================================== -->
-
         <div class="market-salary-box">
 
-            <h3>💰 Salary Information</h3>
+            <h3>
+                💰 Salary Information
+            </h3>
 
 
             {% if market_insights.salary_min
@@ -395,10 +900,13 @@ Analysis Report - JMS Analyzer
                 {% if market_insights.salary_min %}
 
                     <p>
+
                         Average Minimum Salary:
+
                         <strong>
                             ₹{{ market_insights.salary_min }}
                         </strong>
+
                     </p>
 
                 {% endif %}
@@ -407,10 +915,13 @@ Analysis Report - JMS Analyzer
                 {% if market_insights.salary_max %}
 
                     <p>
+
                         Average Maximum Salary:
+
                         <strong>
                             ₹{{ market_insights.salary_max }}
                         </strong>
+
                     </p>
 
                 {% endif %}
@@ -430,27 +941,20 @@ Analysis Report - JMS Analyzer
         </div>
 
 
-        <!-- =====================================
-             MARKET INFORMATION NOTE
-        ====================================== -->
-
         <div class="market-source-note">
 
             <p>
+
                 📊 Market insights are generated from
                 currently available job listings and
                 may change over time.
+
             </p>
 
         </div>
 
 
     {% else %}
-
-
-        <!-- =====================================
-             MARKET DATA UNAVAILABLE
-        ====================================== -->
 
         <div class="market-empty">
 
@@ -470,7 +974,6 @@ Analysis Report - JMS Analyzer
 
         </div>
 
-
     {% endif %}
 
 </section>
@@ -482,7 +985,9 @@ Analysis Report - JMS Analyzer
 
 <section class="analysis-section">
 
-    <h2>Skill Distribution</h2>
+    <h2>
+        Skill Distribution
+    </h2>
 
     <div class="chart-container">
 
@@ -499,7 +1004,9 @@ Analysis Report - JMS Analyzer
 
 <section class="analysis-section">
 
-    <h2>Recommendation</h2>
+    <h2>
+        Recommendation
+    </h2>
 
     <div class="recommendation-box">
 
@@ -513,40 +1020,170 @@ Analysis Report - JMS Analyzer
 
 
 <!-- =========================================
-     LEARNING ROADMAP
+     V7.4 ENHANCED LEARNING ROADMAP
 ========================================== -->
 
 <section class="analysis-section">
 
-    <h2>Your Learning Roadmap</h2>
+    <h2>
+        🚀 Your Personalized Learning Roadmap
+    </h2>
 
     <p class="roadmap-description">
 
-        Follow these steps to improve your
-        readiness for {{ dream_job }}.
+        Follow this step-by-step roadmap to improve
+        your readiness for
+        <strong>{{ dream_job }}</strong>.
+
+        The learning order is based on skill
+        priority and current market demand.
 
     </p>
 
 
-    <div class="roadmap-box">
+    {% if roadmap %}
 
-        {% for step in roadmap %}
+        <div class="enhanced-roadmap">
 
-            <div class="roadmap-step">
+            {% for step in roadmap %}
 
-                <span class="roadmap-number">
-                    {{ loop.index }}
-                </span>
+                <div class="roadmap-card">
 
-                <span>
-                    {{ step }}
-                </span>
+                    <div class="roadmap-week">
 
-            </div>
+                        <span class="roadmap-number">
+                            {{ step.week }}
+                        </span>
 
-        {% endfor %}
+                        <span class="roadmap-week-label">
+                            WEEK {{ step.week }}
+                        </span>
 
-    </div>
+                    </div>
+
+
+                    <div class="roadmap-content">
+
+                        <div class="roadmap-title-row">
+
+                            <h3>
+                                🎯 {{ step.skill }}
+                            </h3>
+
+
+                            <div class="roadmap-badges">
+
+                                <span class="roadmap-demand">
+                                    📈 {{ step.demand }}
+                                </span>
+
+
+                                <span class="roadmap-priority">
+                                    ⭐ {{ step.priority }}/5
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="roadmap-detail">
+
+                            <div class="roadmap-detail-icon">
+                                📚
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Learn
+                                </h4>
+
+                                <p>
+                                    {{ step.learn }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="roadmap-detail">
+
+                            <div class="roadmap-detail-icon">
+                                💻
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Practice
+                                </h4>
+
+                                <p>
+                                    {{ step.practice }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="roadmap-detail roadmap-project">
+
+                            <div class="roadmap-detail-icon">
+                                🛠️
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    Mini Project
+                                </h4>
+
+                                <p>
+                                    {{ step.project }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                {% if not loop.last %}
+
+                    <div class="roadmap-connector">
+                        ↓
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="market-empty">
+
+            <h3>
+                📚 Roadmap Unavailable
+            </h3>
+
+            <p>
+                No learning roadmap could be generated
+                for this analysis.
+            </p>
+
+        </div>
+
+    {% endif %}
 
 </section>
 

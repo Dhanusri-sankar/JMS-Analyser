@@ -1,6 +1,7 @@
 import os
 import io
 import csv
+import uuid
 
 import plotly.graph_objects as go
 
@@ -26,7 +27,9 @@ from analyzer import (
     get_required_skills,
     analyze,
     calculate_weighted_score,
-    prioritize_missing_skills
+    prioritize_missing_skills,
+    match_resume_to_job,
+    calculate_resume_match_score
 )
 
 from roadmap import ROADMAP
@@ -65,7 +68,12 @@ create_tables()
 # UPLOAD FOLDER
 # ==================================================
 
-UPLOAD_FOLDER = "uploads"
+UPLOAD_FOLDER = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)
+    ),
+    "uploads"
+)
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
@@ -357,9 +365,10 @@ def analysis():
         "dream_job"
     )
 
-    # ------------------------------------------------
+
+    # ==================================================
     # DREAM JOB VALIDATION
-    # ------------------------------------------------
+    # ==================================================
 
     if not dream_job:
 
@@ -374,27 +383,55 @@ def analysis():
         """
 
 
-    # ------------------------------------------------
+    # ==================================================
     # GET RESUME
-    # ------------------------------------------------
+    # ==================================================
 
     resume = request.files.get(
         "resume"
     )
 
 
-    # ------------------------------------------------
+    # --------------------------------------------------
+    # RESUME VARIABLES
+    # --------------------------------------------------
+
+    resume_uploaded = False
+
+    resume_match_score = 0
+
+    matched_resume_skills = []
+
+    missing_resume_skills = []
+
+    additional_resume_skills = []
+
+
+    # ==================================================
     # RESUME ANALYSIS
-    # ------------------------------------------------
+    # ==================================================
 
     if resume and resume.filename != "":
+
+        resume_uploaded = True
+
+
+        # ------------------------------------------------
+        # ALLOWED FILE TYPES
+        # ------------------------------------------------
 
         allowed_extensions = (
             ".pdf",
             ".docx"
         )
 
-        if not resume.filename.lower().endswith(
+
+        original_filename = (
+            resume.filename
+        )
+
+
+        if not original_filename.lower().endswith(
             allowed_extensions
         ):
 
@@ -410,9 +447,14 @@ def analysis():
             """
 
 
+        # ------------------------------------------------
+        # SECURE ORIGINAL FILE NAME
+        # ------------------------------------------------
+
         filename = secure_filename(
-            resume.filename
+            original_filename
         )
+
 
         if not filename:
 
@@ -428,22 +470,66 @@ def analysis():
             """
 
 
+        # ------------------------------------------------
+        # GET FILE EXTENSION
+        # ------------------------------------------------
+
+        file_extension = os.path.splitext(
+            filename
+        )[1].lower()
+
+
+        # ------------------------------------------------
+        # CREATE UNIQUE TEMPORARY FILE NAME
+        # ------------------------------------------------
+        #
+        # We do NOT use the user's original
+        # filename for storage.
+        #
+        # Example:
+        #
+        # a8f92d7c9e....pdf
+        #
+        # This reduces filename collision
+        # and avoids storing the original
+        # personal filename.
+        # ------------------------------------------------
+
+        temporary_filename = (
+            uuid.uuid4().hex
+            + file_extension
+        )
+
+
         file_path = os.path.join(
             app.config["UPLOAD_FOLDER"],
-            filename
+            temporary_filename
         )
 
 
-        resume.save(
-            file_path
-        )
-
+        # ------------------------------------------------
+        # PROCESS RESUME TEMPORARILY
+        # ------------------------------------------------
 
         try:
+
+            # --------------------------------------------
+            # SAVE TEMPORARY RESUME
+            # --------------------------------------------
+
+            resume.save(
+                file_path
+            )
+
+
+            # --------------------------------------------
+            # EXTRACT SKILLS
+            # --------------------------------------------
 
             selected_skills = extract_skills(
                 file_path
             )
+
 
         except Exception:
 
@@ -459,9 +545,37 @@ def analysis():
             """
 
 
-    # ------------------------------------------------
+        finally:
+
+            # --------------------------------------------
+            # DELETE RESUME IMMEDIATELY
+            # --------------------------------------------
+            #
+            # The resume is only needed while
+            # extracting skills.
+            #
+            # After extraction it is permanently
+            # removed from the uploads folder.
+            # --------------------------------------------
+
+            if os.path.exists(
+                file_path
+            ):
+
+                try:
+
+                    os.remove(
+                        file_path
+                    )
+
+                except OSError:
+
+                    pass
+
+
+    # ==================================================
     # MANUAL SKILL ANALYSIS
-    # ------------------------------------------------
+    # ==================================================
 
     else:
 
@@ -472,9 +586,9 @@ def analysis():
         )
 
 
-    # ------------------------------------------------
+    # ==================================================
     # SKILL VALIDATION
-    # ------------------------------------------------
+    # ==================================================
 
     if not selected_skills:
 
@@ -491,9 +605,9 @@ def analysis():
         """
 
 
-    # ------------------------------------------------
+    # ==================================================
     # GET REQUIRED SKILLS
-    # ------------------------------------------------
+    # ==================================================
 
     required_skills = get_required_skills(
         dream_job
@@ -513,19 +627,58 @@ def analysis():
         """
 
 
-    # ------------------------------------------------
-    # ANALYZE FOUND / MISSING SKILLS
-    # ------------------------------------------------
+    # ==================================================
+    # V7.5 RESUME VS JOB MATCHING
+    # ==================================================
 
-    found_skills, missing_skills = analyze(
-        selected_skills,
-        required_skills
-    )
+    if resume_uploaded:
+
+        (
+            matched_resume_skills,
+            missing_resume_skills,
+            additional_resume_skills
+        ) = match_resume_to_job(
+            selected_skills,
+            required_skills
+        )
 
 
-    # ------------------------------------------------
+        resume_match_score = (
+            calculate_resume_match_score(
+                matched_resume_skills,
+                required_skills
+            )
+        )
+
+
+        # ----------------------------------------------
+        # RESUME MATCHING BECOMES NORMAL ANALYSIS
+        # ----------------------------------------------
+
+        found_skills = (
+            matched_resume_skills
+        )
+
+        missing_skills = (
+            missing_resume_skills
+        )
+
+
+    else:
+
+        # ----------------------------------------------
+        # EXISTING MANUAL SKILL ANALYSIS
+        # ----------------------------------------------
+
+        found_skills, missing_skills = analyze(
+            selected_skills,
+            required_skills
+        )
+
+
+    # ==================================================
     # V5 WEIGHTED READINESS SCORE
-    # ------------------------------------------------
+    # ==================================================
 
     percentage = calculate_weighted_score(
         found_skills,
@@ -533,9 +686,9 @@ def analysis():
     )
 
 
-    # ------------------------------------------------
+    # ==================================================
     # V6 MARKET PRIORITY
-    # ------------------------------------------------
+    # ==================================================
 
     market_skills = prioritize_missing_skills(
         missing_skills
@@ -553,26 +706,35 @@ def analysis():
             country="in"
         )
 
-    except Exception as error:
+    except Exception:
 
         market_insights = {
+
             "success": False,
+
             "message": (
                 "Live market information "
                 "is temporarily unavailable."
             ),
+
             "total_jobs": 0,
+
             "top_companies": [],
+
             "top_locations": [],
+
             "salary_min": None,
+
             "salary_max": None,
+
             "market_level": "Unavailable"
+
         }
 
 
-    # ------------------------------------------------
+    # ==================================================
     # SKILL COUNTS
-    # ------------------------------------------------
+    # ==================================================
 
     selected_count = len(
         selected_skills
@@ -587,9 +749,9 @@ def analysis():
     )
 
 
-    # ------------------------------------------------
+    # ==================================================
     # PIE CHART
-    # ------------------------------------------------
+    # ==================================================
 
     labels = [
         "Found Skills",
@@ -600,6 +762,7 @@ def analysis():
         found_count,
         missing_count
     ]
+
 
     fig = go.Figure(
         data=[
@@ -617,9 +780,11 @@ def analysis():
         ]
     )
 
+
     fig.update_layout(
         title="Skill Distribution"
     )
+
 
     graph = fig.to_html(
         full_html=False,
@@ -627,9 +792,9 @@ def analysis():
     )
 
 
-    # ------------------------------------------------
+    # ==================================================
     # RECOMMENDATION
-    # ------------------------------------------------
+    # ==================================================
 
     if percentage >= 80:
 
@@ -653,9 +818,9 @@ def analysis():
         )
 
 
-    # ------------------------------------------------
+    # ==================================================
     # STATUS
-    # ------------------------------------------------
+    # ==================================================
 
     if percentage >= 90:
 
@@ -675,7 +840,7 @@ def analysis():
 
 
     # ==================================================
-    # V6 INTELLIGENT MARKET-PRIORITIZED ROADMAP
+    # V7.4 ENHANCED INTELLIGENT LEARNING ROADMAP
     # ==================================================
 
     roadmap = []
@@ -683,8 +848,374 @@ def analysis():
     week = 1
 
 
-    # Market skills are already sorted
-    # from highest priority to lowest priority
+    # ==================================================
+    # ROADMAP DETAILS
+    # ==================================================
+
+    ROADMAP_DETAILS = {
+
+        "SQL": {
+
+            "learn": (
+                "Learn SQL fundamentals, "
+                "SELECT queries, filtering, "
+                "joins, grouping and subqueries."
+            ),
+
+            "practice": (
+                "Practice SQL queries using "
+                "real-world datasets."
+            ),
+
+            "project": (
+                "Build a small SQL data-analysis "
+                "project with multiple tables."
+            )
+
+        },
+
+
+        "Python": {
+
+            "learn": (
+                "Strengthen Python fundamentals, "
+                "functions, data structures, "
+                "modules and error handling."
+            ),
+
+            "practice": (
+                "Solve Python programming and "
+                "problem-solving exercises."
+            ),
+
+            "project": (
+                "Build a Python application using "
+                "real-world data."
+            )
+
+        },
+
+
+        "Apache Spark": {
+
+            "learn": (
+                "Learn Apache Spark fundamentals, "
+                "RDDs, DataFrames and transformations."
+            ),
+
+            "practice": (
+                "Practice processing large datasets "
+                "using Spark DataFrames."
+            ),
+
+            "project": (
+                "Build a mini big-data processing "
+                "project using Apache Spark."
+            )
+
+        },
+
+
+        "Hadoop": {
+
+            "learn": (
+                "Learn Hadoop architecture, HDFS, "
+                "MapReduce and distributed storage."
+            ),
+
+            "practice": (
+                "Practice basic Hadoop "
+                "data-processing operations."
+            ),
+
+            "project": (
+                "Build a small distributed-data "
+                "processing project."
+            )
+
+        },
+
+
+        "Airflow": {
+
+            "learn": (
+                "Learn Apache Airflow DAGs, tasks, "
+                "operators and scheduling."
+            ),
+
+            "practice": (
+                "Create and schedule simple "
+                "data pipelines."
+            ),
+
+            "project": (
+                "Build a mini ETL pipeline "
+                "using Airflow."
+            )
+
+        },
+
+
+        "Flask": {
+
+            "learn": (
+                "Learn Flask routing, templates, "
+                "forms and backend development."
+            ),
+
+            "practice": (
+                "Create small Flask routes and "
+                "form-handling applications."
+            ),
+
+            "project": (
+                "Build a Flask web application "
+                "with database integration."
+            )
+
+        },
+
+
+        "Git": {
+
+            "learn": (
+                "Learn Git repositories, branches, "
+                "commits, merging and GitHub."
+            ),
+
+            "practice": (
+                "Practice Git using your own "
+                "development projects."
+            ),
+
+            "project": (
+                "Create and maintain a professional "
+                "GitHub project repository."
+            )
+
+        },
+
+
+        "OOP": {
+
+            "learn": (
+                "Learn classes, objects, inheritance, "
+                "polymorphism and encapsulation."
+            ),
+
+            "practice": (
+                "Solve object-oriented "
+                "programming problems."
+            ),
+
+            "project": (
+                "Build a small object-oriented "
+                "application."
+            )
+
+        },
+
+
+        "Pandas": {
+
+            "learn": (
+                "Learn Pandas Series, DataFrames, "
+                "filtering, grouping and data cleaning."
+            ),
+
+            "practice": (
+                "Practice data cleaning and "
+                "analysis using datasets."
+            ),
+
+            "project": (
+                "Build a data-analysis project "
+                "using Pandas."
+            )
+
+        },
+
+
+        "NumPy": {
+
+            "learn": (
+                "Learn NumPy arrays, indexing, "
+                "vectorization and numerical operations."
+            ),
+
+            "practice": (
+                "Practice numerical data-processing "
+                "problems."
+            ),
+
+            "project": (
+                "Build a numerical-analysis "
+                "project using NumPy."
+            )
+
+        },
+
+
+        "Machine Learning": {
+
+            "learn": (
+                "Learn supervised and unsupervised "
+                "learning, model training and evaluation."
+            ),
+
+            "practice": (
+                "Train and evaluate machine-learning "
+                "models using datasets."
+            ),
+
+            "project": (
+                "Build a machine-learning "
+                "prediction project."
+            )
+
+        },
+
+
+        "Deep Learning": {
+
+            "learn": (
+                "Learn neural networks, deep-learning "
+                "architectures and model training."
+            ),
+
+            "practice": (
+                "Train simple neural-network "
+                "models using datasets."
+            ),
+
+            "project": (
+                "Build a deep-learning project "
+                "for a real-world problem."
+            )
+
+        },
+
+
+        "TensorFlow": {
+
+            "learn": (
+                "Learn TensorFlow fundamentals, "
+                "tensors, models and training."
+            ),
+
+            "practice": (
+                "Build and train simple "
+                "TensorFlow models."
+            ),
+
+            "project": (
+                "Create a TensorFlow-based "
+                "machine-learning project."
+            )
+
+        },
+
+
+        "Java": {
+
+            "learn": (
+                "Learn Java syntax, collections, "
+                "exception handling and OOP."
+            ),
+
+            "practice": (
+                "Solve Java programming problems."
+            ),
+
+            "project": (
+                "Build a Java application using "
+                "object-oriented principles."
+            )
+
+        },
+
+
+        "Spring Boot": {
+
+            "learn": (
+                "Learn Spring Boot architecture, "
+                "REST controllers and dependency injection."
+            ),
+
+            "practice": (
+                "Create REST APIs using "
+                "Spring Boot."
+            ),
+
+            "project": (
+                "Build a Spring Boot backend "
+                "application."
+            )
+
+        },
+
+
+        "HTML": {
+
+            "learn": (
+                "Learn HTML structure, forms, "
+                "semantic elements and accessibility."
+            ),
+
+            "practice": (
+                "Create responsive web pages."
+            ),
+
+            "project": (
+                "Build a professional "
+                "portfolio page."
+            )
+
+        },
+
+
+        "CSS": {
+
+            "learn": (
+                "Learn CSS layouts, Flexbox, Grid, "
+                "responsive design and styling."
+            ),
+
+            "practice": (
+                "Recreate modern web-page layouts."
+            ),
+
+            "project": (
+                "Build a responsive website."
+            )
+
+        },
+
+
+        "JavaScript": {
+
+            "learn": (
+                "Learn JavaScript fundamentals, "
+                "DOM manipulation and events."
+            ),
+
+            "practice": (
+                "Create interactive web components."
+            ),
+
+            "project": (
+                "Build an interactive JavaScript "
+                "web application."
+            )
+
+        }
+
+    }
+
+
+    # ==================================================
+    # CREATE PERSONALIZED ROADMAP
+    # ==================================================
 
     for item in market_skills:
 
@@ -695,51 +1226,140 @@ def analysis():
         priority = item["priority"]
 
 
-        learning_step = ROADMAP.get(
-            skill,
-            (
-                f"Learn {skill} Fundamentals "
-                "and Practice with Hands-on Exercises"
+        details = ROADMAP_DETAILS.get(
+            skill
+        )
+
+
+        if not details:
+
+            learning_step = ROADMAP.get(
+                skill,
+                (
+                    f"Learn {skill} fundamentals "
+                    "and practice with hands-on exercises."
+                )
             )
-        )
 
 
-        roadmap.append(
-            f"Week {week}: "
-            f"{learning_step} "
-            f"| Market Demand: {demand} "
-            f"| Priority: {priority}/5"
-        )
+            details = {
+
+                "learn": learning_step,
+
+                "practice": (
+                    f"Practice {skill} using "
+                    "small hands-on exercises."
+                ),
+
+                "project": (
+                    f"Build a mini project using "
+                    f"{skill}."
+                )
+
+            }
+
+
+        roadmap.append({
+
+            "week": week,
+
+            "skill": skill,
+
+            "demand": demand,
+
+            "priority": priority,
+
+            "learn": details["learn"],
+
+            "practice": details["practice"],
+
+            "project": details["project"]
+
+        })
 
 
         week += 1
 
 
-    # ------------------------------------------------
-    # FINAL PROJECT STEP
-    # ------------------------------------------------
+    # ==================================================
+    # FINAL PORTFOLIO PROJECT
+    # ==================================================
 
     if market_skills:
 
-        roadmap.append(
-            f"Week {week}: "
-            "Build a Mini Project using "
-            "the highest-priority skills "
-            "you learned"
-        )
+        highest_priority_skills = [
+
+            item["skill"]
+
+            for item in market_skills[:3]
+
+        ]
+
+
+        roadmap.append({
+
+            "week": week,
+
+            "skill": "Final Portfolio Project",
+
+            "demand": "Career Focus",
+
+            "priority": 5,
+
+            "learn": (
+                "Combine the important skills "
+                "you learned during the roadmap."
+            ),
+
+            "practice": (
+                "Develop the project step-by-step "
+                "and test each component."
+            ),
+
+            "project": (
+                "Build a portfolio-ready project "
+                "using: "
+                + ", ".join(
+                    highest_priority_skills
+                )
+            )
+
+        })
+
 
     else:
 
-        roadmap.append(
-            "Week 1: "
-            "Build an Advanced Project and "
-            "strengthen your portfolio"
-        )
+        roadmap.append({
+
+            "week": 1,
+
+            "skill": "Advanced Portfolio Project",
+
+            "demand": "Career Focus",
+
+            "priority": 5,
+
+            "learn": (
+                "Strengthen your existing skills "
+                "through an advanced project."
+            ),
+
+            "practice": (
+                "Practice solving real-world "
+                "development problems."
+            ),
+
+            "project": (
+                "Build and publish an advanced "
+                "portfolio project."
+            )
+
+        })
 
 
-    # ------------------------------------------------
+    # ==================================================
     # SAVE REPORT
-    # ------------------------------------------------
+    # ==================================================
 
     save_report(
         dream_job,
@@ -750,9 +1370,9 @@ def analysis():
     )
 
 
-    # ------------------------------------------------
+    # ==================================================
     # SAVE LAST REPORT
-    # ------------------------------------------------
+    # ==================================================
 
     app.config["LAST_REPORT"] = {
 
@@ -776,12 +1396,13 @@ def analysis():
 
         "roadmap":
             roadmap
+
     }
 
 
-    # ------------------------------------------------
+    # ==================================================
     # DISPLAY RESULT
-    # ------------------------------------------------
+    # ==================================================
 
     return render_template(
 
@@ -797,7 +1418,6 @@ def analysis():
 
         market_skills=market_skills,
 
-        # V7 MARKET INSIGHTS
         market_insights=market_insights,
 
         percentage=percentage,
@@ -814,7 +1434,23 @@ def analysis():
 
         graph=graph,
 
-        roadmap=roadmap
+        roadmap=roadmap,
+
+
+        # ==============================================
+        # V7.5 RESUME MATCHING DATA
+        # ==============================================
+
+        resume_uploaded=resume_uploaded,
+
+        resume_match_score=resume_match_score,
+
+        matched_resume_skills=matched_resume_skills,
+
+        missing_resume_skills=missing_resume_skills,
+
+        additional_resume_skills=additional_resume_skills
+
     )
 
 
@@ -835,17 +1471,23 @@ def dashboard():
     if total_reports > 0:
 
         average_score = int(
+
             sum(
                 report[2]
                 for report in reports
             )
             / total_reports
+
         )
 
+
         highest_score = max(
+
             report[2]
             for report in reports
+
         )
+
 
     else:
 
@@ -874,6 +1516,7 @@ def dashboard():
         unique_jobs=unique_jobs,
 
         most_analyzed_job=most_analyzed_job
+
     )
 
 
@@ -893,6 +1536,7 @@ def download_report():
 
         return """
         <script>
+
             alert(
                 "No report available. "
                 + "Please analyze your "
@@ -900,6 +1544,7 @@ def download_report():
             );
 
             window.location.href = "/";
+
         </script>
         """
 
@@ -926,12 +1571,16 @@ def download_report():
         report["recommendation"],
 
         report["roadmap"]
+
     )
 
 
     return send_file(
+
         filename,
+
         as_attachment=True
+
     )
 
 
@@ -941,6 +1590,13 @@ def download_report():
 
 if __name__ == "__main__":
 
+    debug_mode = (
+        os.getenv(
+            "FLASK_DEBUG",
+            "1"
+        ) == "1"
+    )
+
     app.run(
-        debug=True
+        debug=debug_mode
     )

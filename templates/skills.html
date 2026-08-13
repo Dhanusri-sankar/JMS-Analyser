@@ -13,16 +13,26 @@ Skills - JMS Analyzer
 
     <h2>Select Your Current Skills</h2>
 
-    <!-- Selected Dream Job -->
+
+    <!-- =========================================
+         SELECTED DREAM JOB
+    ========================================== -->
 
     <div class="selected-job-card">
+
         <span>Dream Job</span>
+
         <h3>{{ dream_job }}</h3>
+
     </div>
 
+
     <p class="hero-description">
+
         Select all the skills you already know,
-        or upload your resume to automatically detect your skills.
+        or upload your resume to automatically
+        detect your skills.
+
     </p>
 
 
@@ -30,7 +40,10 @@ Skills - JMS Analyzer
           method="POST"
           enctype="multipart/form-data">
 
-        <!-- Keep dream job when form is submitted -->
+
+        <!-- =====================================
+             KEEP DREAM JOB
+        ====================================== -->
 
         <input type="hidden"
                name="dream_job"
@@ -77,17 +90,93 @@ Skills - JMS Analyzer
 
         <div class="resume-upload-box">
 
-            <h3>📄 Upload Your Resume</h3>
+            <h3>
+                📄 Upload Your Resume
+            </h3>
+
 
             <p>
+
                 Upload a PDF or DOCX resume and
-                JMS Analyzer will automatically detect
-                your technical skills.
+                JMS Analyzer will automatically
+                detect your technical skills.
+
             </p>
 
-            <input type="file"
-                   name="resume"
-                   accept=".pdf,.docx">
+
+            <!-- =================================
+                 PRIVACY NOTICE
+            ================================== -->
+
+            <div class="resume-privacy-upload-note">
+
+                <h4>
+                    🔐 Resume Privacy Notice
+                </h4>
+
+
+                <p>
+
+                    Your resume is processed
+                    temporarily only to identify
+                    relevant skills for this analysis.
+
+                </p>
+
+
+                <p>
+
+                    The uploaded resume is
+                    automatically deleted after
+                    processing and is not stored
+                    in the JMS Analyzer database.
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        For better privacy:
+                    </strong>
+
+                    Upload only the page containing
+                    your skills whenever possible.
+                    Avoid unnecessary personal
+                    information such as your phone
+                    number, home address, or other
+                    sensitive details.
+
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 FILE INPUT
+            ================================== -->
+
+            <div class="resume-file-input">
+
+                <label for="resume">
+                    Choose Resume
+                </label>
+
+
+                <input
+                    id="resume"
+                    type="file"
+                    name="resume"
+                    accept=".pdf,.docx"
+                >
+
+
+                <small>
+                    Accepted formats: PDF or DOCX
+                    • Maximum size: 5 MB
+                </small>
+
+            </div>
 
         </div>
 
@@ -106,6 +195,7 @@ Skills - JMS Analyzer
             </button>
 
         </div>
+
 
     </form>
 

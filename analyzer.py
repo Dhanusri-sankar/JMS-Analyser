@@ -84,13 +84,13 @@ def analyze(
     missing = []
 
     selected_lower = {
-        skill.lower()
+        skill.lower().strip()
         for skill in selected_skills
     }
 
     for skill in required_skills:
 
-        if skill.lower() in selected_lower:
+        if skill.lower().strip() in selected_lower:
 
             found.append(skill)
 
@@ -99,6 +99,130 @@ def analyze(
             missing.append(skill)
 
     return found, missing
+
+
+# ==================================================
+# V7.5B RESUME / JOB SKILL MATCHING
+# ==================================================
+
+def match_resume_to_job(
+    resume_skills,
+    required_skills
+):
+    """
+    Compare skills detected from a resume
+    against the skills required for a job.
+
+    Returns:
+
+        matched_skills
+        missing_skills
+        additional_skills
+    """
+
+    resume_lower = {
+        skill.lower().strip()
+        for skill in resume_skills
+    }
+
+    required_lower = {
+        skill.lower().strip()
+        for skill in required_skills
+    }
+
+
+    matched_skills = []
+    missing_skills = []
+    additional_skills = []
+
+
+    # ------------------------------------------------
+    # MATCHED + MISSING JOB SKILLS
+    # ------------------------------------------------
+
+    for skill in required_skills:
+
+        normalized_skill = (
+            skill.lower().strip()
+        )
+
+        if normalized_skill in resume_lower:
+
+            matched_skills.append(
+                skill
+            )
+
+        else:
+
+            missing_skills.append(
+                skill
+            )
+
+
+    # ------------------------------------------------
+    # ADDITIONAL RESUME SKILLS
+    # ------------------------------------------------
+
+    for skill in resume_skills:
+
+        normalized_skill = (
+            skill.lower().strip()
+        )
+
+        if normalized_skill not in required_lower:
+
+            additional_skills.append(
+                skill
+            )
+
+
+    return (
+        matched_skills,
+        missing_skills,
+        additional_skills
+    )
+
+
+# ==================================================
+# V7.5B RESUME MATCH SCORE
+# ==================================================
+
+def calculate_resume_match_score(
+    matched_skills,
+    required_skills
+):
+    """
+    Calculate the percentage of required
+    job skills found in the resume.
+    """
+
+    if not required_skills:
+
+        return 0
+
+
+    matched_lower = {
+        skill.lower().strip()
+        for skill in matched_skills
+    }
+
+
+    matched_count = 0
+
+
+    for skill in required_skills:
+
+        if skill.lower().strip() in matched_lower:
+
+            matched_count += 1
+
+
+    return round(
+        (
+            matched_count
+            / len(required_skills)
+        ) * 100
+    )
 
 
 # ==================================================
@@ -114,13 +238,17 @@ def calculate_weighted_score(
 
         return 0
 
+
     total_weight = 0
+
     earned_weight = 0
 
+
     found_lower = {
-        skill.lower()
+        skill.lower().strip()
         for skill in found_skills
     }
+
 
     for index, skill in enumerate(
         required_skills
@@ -141,15 +269,19 @@ def calculate_weighted_score(
 
             weight = 1
 
+
         total_weight += weight
 
-        if skill.lower() in found_lower:
+
+        if skill.lower().strip() in found_lower:
 
             earned_weight += weight
+
 
     if total_weight == 0:
 
         return 0
+
 
     return round(
         (
@@ -167,15 +299,19 @@ def get_skill_market_info(skill):
 
     market_data = load_market_data()
 
+
     if skill in market_data:
 
         return market_data[skill]
 
-    # Safe fallback if a skill has not yet
-    # been added to skill_market.json
+
+    # Safe fallback
     return {
+
         "demand": "Unknown",
+
         "priority": 0
+
     }
 
 
@@ -193,6 +329,7 @@ def get_job_market_skills(job_name):
 
     result = []
 
+
     for skill in required_skills:
 
         information = market_data.get(
@@ -203,17 +340,23 @@ def get_job_market_skills(job_name):
             }
         )
 
+
         result.append({
+
             "skill": skill,
+
             "demand": information.get(
                 "demand",
                 "Unknown"
             ),
+
             "priority": information.get(
                 "priority",
                 0
             )
+
         })
+
 
     return result
 
@@ -230,6 +373,7 @@ def prioritize_missing_skills(
 
     prioritized = []
 
+
     for skill in missing_skills:
 
         information = market_data.get(
@@ -240,22 +384,30 @@ def prioritize_missing_skills(
             }
         )
 
+
         prioritized.append({
+
             "skill": skill,
+
             "demand": information.get(
                 "demand",
                 "Unknown"
             ),
+
             "priority": information.get(
                 "priority",
                 0
             )
+
         })
 
+
     # Highest priority first
+
     prioritized.sort(
         key=lambda item: item["priority"],
         reverse=True
     )
+
 
     return prioritized
