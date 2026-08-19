@@ -202,3 +202,10 @@ View Analysis Report
 Save Analysis History
   ↓
 Export Report
+
+
+## 📸 Project Showcase
+
+Explore the complete JMS Analyzer interface and workflow through the project screenshots.
+
+👉 [View JMS Analyzer Project Screenshots](screenshots/JMS_Analyzer_Project_Showcase.pdf)
